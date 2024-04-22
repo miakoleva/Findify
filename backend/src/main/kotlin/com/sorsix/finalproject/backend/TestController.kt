@@ -13,6 +13,6 @@ class TestController {
 
     @GetMapping("/test")
     fun test(response: HttpServletResponse): ResponseEntity<String> {
-        return ResponseEntity("BRAVO!!!", HttpStatus.OK)
+        return ResponseEntity("BRAVO Dario i Mia!!!", HttpStatus.OK)
     }
 }
