@@ -1,18 +1,19 @@
 package com.sorsix.finalproject.backend.domain
 
-import jakarta.persistence.Entity
+import jakarta.persistence.*
 
-
-//@Entity
-//@Table
+@Entity
+@Table(name = "comments")
 data class Comment(
-//    @Column(name = 'id')
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     val id: Long,
+    @Column
     val comment: String,
-//    @ManyToOne
-//    @JoinColumn(name = 'post_id')
-//    val post: Post
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    val post: Post
 )
-
 
 
