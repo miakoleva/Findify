@@ -1,5 +1,7 @@
 package com.sorsix.finalproject.backend.domain
 
+import jakarta.persistence.Entity
+
 
 //@Entity
 //@Table
