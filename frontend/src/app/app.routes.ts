@@ -2,11 +2,15 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login-modal/login-modal.component';
 import { RegisterComponent } from './components/register-modal/register-modal.component';
+import { LostItemsComponent } from './components/lost-items/lost-items.component';
+import { FoundItemsComponent } from './components/found-items/found-items.component';
 
 
 export const routes: Routes = [
-    {path: 'home', component: HomeComponent},
-    {path: 'home/login', component: LoginComponent},
-    {path: 'home/register', component: RegisterComponent},
-    {path: '**', redirectTo: 'home'}
+    { path: 'home', component: HomeComponent },
+    { path: 'home/login', component: HomeComponent },
+    {path: 'home/register', component: HomeComponent},
+    { path: 'lost-items', component: LostItemsComponent },
+    { path: 'found-items', component: FoundItemsComponent },
+    { path: '**', redirectTo: 'home' }
 ];
