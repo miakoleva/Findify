@@ -9,9 +9,9 @@ data class User(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     val id: Long,
-    @Column(name = "name")
+    @Column(name="first_name")
     val firstName: String,
-    @Column(name = "surname")
+    @Column(name = "last_name")
     val lastName: String,
     @Column(name = "phone_number")
     val phoneNumber: String,
@@ -20,6 +20,6 @@ data class User(
     @Column
     val password: String,
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(name = "user_role")
     val role: Role
 )
