@@ -1,13 +1,24 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Municipality } from '../models/Municipality';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-
+  save(user: any) {
+    this.http.post<void>('http://localhost:8080/home/signup', user)
+      .subscribe({
+        next: () => {
+          console.log('User signed up successfully');
+          // Optionally, redirect the user to a different page
+        },
+        error: (err) => {
+          console.error('Error signing up user:', err);
+          // Handle error, e.g., display an error message to the user
+        }
+      });
+  }
 }

@@ -8,7 +8,7 @@ data class User(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    val id: Long,
+    val id: Long? = null,
     @Column(name="first_name")
     val firstName: String,
     @Column(name = "last_name")
@@ -21,5 +21,5 @@ data class User(
     val password: String,
     @Enumerated(EnumType.STRING)
     @Column(name = "user_role")
-    val role: Role
+    val role: Role? = Role.ROLE_USER
 )

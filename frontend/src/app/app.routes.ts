@@ -7,7 +7,7 @@ import { FoundItemsComponent } from './components/found-items/found-items.compon
 export const routes: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'home/login', component: HomeComponent },
-    {path: 'home/register', component: HomeComponent},
+    {path: 'home/signup', component: HomeComponent},
     { path: 'lost-items', component: LostItemsComponent },
     { path: 'found-items', component: FoundItemsComponent },
     { path: '**', redirectTo: 'home' }

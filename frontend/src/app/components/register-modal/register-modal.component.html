@@ -35,28 +35,28 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form (ngSubmit)="submitForm()">
                     <div class="form-row mb-3">
                         <div class="col">
                             <label for="inputFirstName">First Name</label>
-                            <input type="text" class="form-control" id="inputFirstName" placeholder="First Name">
+                            <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" name="firstName" [(ngModel)]="firstName">
                         </div>
                         <div class="col">
                             <label for="inputLastName">Last Name</label>
-                            <input type="text" class="form-control" id="inputLastName" placeholder="Last Name">
+                            <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" name="lastName" [(ngModel)]="lastName">
                         </div>
                     </div>
                     <div class="form-group mb-3">
                         <label for="inputEmail">Email</label>
-                        <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                        <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email" [(ngModel)]="email">
                     </div>
                     <div class="form-group mb-3">
                         <label for="inputPassword">Password</label>
-                        <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                        <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password" [(ngModel)]="password">
                     </div>
                     <div class="form-group mb-3">
                         <label for="inputPhoneNumber">Phone Number</label>
-                        <input type="text" class="form-control" id="inputPhoneNumber" placeholder="Phone Number">
+                        <input type="text" class="form-control" id="inputPhoneNumber" placeholder="Phone Number" name="phoneNumber" [(ngModel)]="phoneNumber">
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
                 </form>
