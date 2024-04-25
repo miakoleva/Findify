@@ -29,9 +29,9 @@
                         <label for="inputMunicipality" class="form-label">Municipality</label>
                         <select id="inputMunicipality" class="form-control">
                             <option selected>Choose...</option>
-                            <option>Centar</option>
-                            <option>Kisela Voda</option>
-                            <option>Aerodrom</option>
+                            @for(m of municipalities; track m.id) {
+                                <option>{{m.name}}</option>
+                            }
                         </select>
                     </div>
                     <div class="mb-3">
@@ -40,7 +40,7 @@
                     </div>
                     <div class="mb-3">
                         <fieldset>
-                            <label for="radios" class="form-label">Type</label>
+                            <label class="form-label">Type</label>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="lostorfound" id="lost" value="lost"
                                     checked>

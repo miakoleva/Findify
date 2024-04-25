@@ -8,7 +8,7 @@ data class Municipality(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    val id: Long,
+    val id: Long = 0,
     @Column
-    val name: String
+    val name: String = ""
 )

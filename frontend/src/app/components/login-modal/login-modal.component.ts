@@ -14,10 +14,10 @@ import { NavBarComponent } from '../nav-bar/nav-bar.component';
 export class LoginComponent implements OnInit {
   constructor(private router: Router) { }
 
-  ngOnInit(): void {
+   ngOnInit(): void {
     const myModal = document.getElementById('loginModal');
     myModal?.addEventListener('hidden.bs.modal', () => {
       this.router.navigate(['/home'])
     });
-  }
+   }
 }
