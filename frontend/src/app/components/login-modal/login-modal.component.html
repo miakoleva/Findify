@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="loginModalLabel">Log In</h5>
-                <button type="button" [routerLink] = "['/home']" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form>
@@ -15,12 +15,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1"
-                            placeholder="Password">
-                    </div>
-                    <div>
-                        <p>Don't have an account? <a [routerLink]="['/home/register']" data-bs-toggle="modal" data-bs-target="#signupModal">Register here.</a></p>
-                        <app-register></app-register>
+                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
                     </div>
                     <button type="submit" class="btn btn-primary">Log In</button>
                 </form>

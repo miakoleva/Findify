@@ -1,1 +1,63 @@
-<p>add-post works!</p>
+<div class="modal fade" id="addPostModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">New Post</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="itemName" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="itemName" placeholder="Name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputCategory" class="form-label">Category</label>
+                        <select id="inputCategory" class="form-control">
+                            <option selected>Choose...</option>
+                            <option>Keys</option>
+                            <option>Personal Documents</option>
+                            <option>Phone</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                            placeholder="Write short description..."></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputMunicipality" class="form-label">Municipality</label>
+                        <select id="inputMunicipality" class="form-control">
+                            <option selected>Choose...</option>
+                            <option>Centar</option>
+                            <option>Kisela Voda</option>
+                            <option>Aerodrom</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="formFileSm" class="form-label">Insert photo</label>
+                        <input class="form-control form-control-sm" id="formFileSm" type="file">
+                    </div>
+                    <div class="mb-3">
+                        <fieldset>
+                            <label for="radios" class="form-label">Type</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="lostorfound" id="lost" value="lost"
+                                    checked>
+                                <label class="form-check-label" for="lost">Lost item</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="lostorfound" id="found"
+                                    value="found">
+                                <label class="form-check-label" for="found">Found item</label>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Post</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
