@@ -34,22 +34,14 @@ export class RegisterComponent implements OnInit {
   }
 
   submitForm() {
-    // const user = {
-    //   firstName: this.firstName,
-    //   lastName: this.lastName,
-    //   phoneNumber: this.phoneNumber,
-    //   email: this.email,
-    //   password: this.password,
-    //   role: "USER"
-    // };
 
     const user = {
-      "role": "User",
+      "role": "USER",
       "firstName": this.firstName,
       "lastName": this.lastName,
       "email": this.email,
       "password": this.password,
-      "phoneNumber": this.phoneNumber
+      "phoneNumber": this.phoneNumber,
     };
 
     this.userService.save(user)

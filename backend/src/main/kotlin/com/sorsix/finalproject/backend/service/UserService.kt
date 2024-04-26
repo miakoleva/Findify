@@ -6,6 +6,7 @@ import com.sorsix.finalproject.backend.api.response.GetUserResponseFailed
 import com.sorsix.finalproject.backend.api.response.GetUserResponseSuccess
 import com.sorsix.finalproject.backend.domain.Role
 import com.sorsix.finalproject.backend.domain.User
+import com.sorsix.finalproject.backend.domain.exceptions.UserExistsException
 import com.sorsix.finalproject.backend.domain.exceptions.UserNotFoundException
 import com.sorsix.finalproject.backend.repository.UserRepository
 import jakarta.transaction.Transactional
@@ -46,8 +47,8 @@ class UserService(
     fun signup(request: CreateUserRequest) {
         val email: String = request.email
         val existingUser: User? = userRepository.findByEmail(email)
-        if (existingUser == null) {
-            //throw DuplicateException(String.format("User with the email address '%s' already exists.", email))
+        if (existingUser != null) {
+            throw UserExistsException(String.format("User with the email address '%s' already exists.", email))
         }
 
         val hashedPassword: String = passwordEncoder.encode(request.password)
