@@ -1,58 +1,50 @@
 package com.sorsix.finalproject.backend.api
 
-import com.sorsix.finalproject.backend.api.request.CreateUserRequest
-import com.sorsix.finalproject.backend.api.request.LoginAttemptResponse
-import com.sorsix.finalproject.backend.api.request.LoginRequest
-import com.sorsix.finalproject.backend.api.request.LoginResponse
-import com.sorsix.finalproject.backend.domain.LoginAttempt
-import com.sorsix.finalproject.backend.repository.UserRepository
-import com.sorsix.finalproject.backend.security.UserDetails
+import com.sorsix.finalproject.backend.authentication.service.HashService
+import com.sorsix.finalproject.backend.authentication.service.TokenService
+import com.sorsix.finalproject.backend.domain.dto.LoginDto
+import com.sorsix.finalproject.backend.domain.dto.LoginResponseDto
+import com.sorsix.finalproject.backend.domain.dto.RegisterDto
 import com.sorsix.finalproject.backend.service.UserService
-import com.sorsix.finalproject.backend.util.JwtUtil
-import org.springframework.http.HttpStatus
+import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
-import org.springframework.security.authentication.AuthenticationManager
-import org.springframework.security.authentication.BadCredentialsException
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
-
-@CrossOrigin
 @RestController
+@RequestMapping("/api")
 class AuthenticationController(
-    private val userService: UserService,
-    private val authenticationManager: AuthenticationManager,
-    //private val loginService: LoginService,
-    private val jwtUtil: JwtUtil,
-    private val userRepository: UserRepository
+    private val hashService: HashService,
+    private val tokenService: TokenService,
+    private val userService: UserService
 ) {
-    @PostMapping("/home/signup")
-    fun signup(@RequestBody requestDto: CreateUserRequest): ResponseEntity<Void> {
-        userService.signup(requestDto)
-        return ResponseEntity.status(HttpStatus.CREATED).build()
+
+    @PostMapping("/login")
+    fun login(@Valid @RequestBody payload: LoginDto): ResponseEntity<*> {
+        val user = userService.findByEmail(payload.email)?.takeIf {
+            hashService.checkBcrypt(payload.password, it.password)
+        }
+
+        return user?.let { ResponseEntity.ok(LoginResponseDto(token = tokenService.createToken(it))) }
+            ?: ResponseEntity.badRequest().body("Invalid Credentials.")
     }
-//    @PostMapping("/home/login")
-//    fun login(@RequestBody request: LoginRequest): ResponseEntity<LoginResponse> {
-//        try {
-//            authenticationManager.authenticate(UsernamePasswordAuthenticationToken(request.email, request.password))
-//        } catch (e: BadCredentialsException) {
-//            loginService.addLoginAttempt(request.email, false)
-//            throw e
-//        }
-//
-//        val user = userRepository.findByEmail(request.email)
-//        val token: String = jwtUtil.generateToken(UserDetails(user!!))
-//        loginService.addLoginAttempt(request.email, true)
-//        return ResponseEntity.ok(LoginResponse(request.email, token))
-//    }
-//    private fun convertToDTOs(loginAttempts: List<LoginAttempt>): List<LoginAttemptResponse> {
-//        val list = mutableListOf<LoginAttemptResponse>()
-//        loginAttempts.forEach { loginAttempt ->
-//            list.add(LoginAttemptResponse.convertToDTO(loginAttempt))
-//        }
-//        return list
-//    }
+
+    @PostMapping("/register")
+    fun register(@Valid @RequestBody payload: RegisterDto): ResponseEntity<*> {
+        if (userService.existsByEmail(payload.email)) {
+            return ResponseEntity.badRequest().body("A user with this email already exists.")
+        }
+        val savedUser = userService.registerUser(
+            payload.firstName,
+            payload.lastName,
+            payload.email,
+            payload.password,
+            payload.phoneNumber
+        )
+        return ResponseEntity.ok(LoginResponseDto(token = tokenService.createToken(savedUser)))
+    }
+
+
 }

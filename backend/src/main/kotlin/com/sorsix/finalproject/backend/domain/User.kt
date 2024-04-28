@@ -8,8 +8,8 @@ data class User(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    val id: Long? = null,
-    @Column(name="first_name")
+    val id: Long,
+    @Column(name = "first_name")
     val firstName: String,
     @Column(name = "last_name")
     val lastName: String,
@@ -22,4 +22,6 @@ data class User(
     @Enumerated(EnumType.STRING)
     @Column(name = "user_role")
     val role: Role? = Role.ROLE_USER
-)
+) {
+    constructor() : this(1L, "Test", "Test", "075123123", "test@test.com", "test123123", Role.ROLE_USER) {}
+}

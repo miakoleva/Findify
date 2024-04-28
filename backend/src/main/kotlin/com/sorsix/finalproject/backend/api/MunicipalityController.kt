@@ -13,6 +13,6 @@ class MunicipalityController(private val municipalityService: MunicipalityServic
 
     @GetMapping("/municipalities")
     fun getMunicipalities(): ResponseEntity<List<Municipality>> {
-        return ResponseEntity.ok().body(municipalityService.getMunicipalities())
+        return ResponseEntity.ok().body(municipalityService.listAll())
     }
 }

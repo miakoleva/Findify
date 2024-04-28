@@ -32,7 +32,17 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.0-Beta2")
 	implementation("org.flywaydb:flyway-core")
 	implementation("org.springframework.boot:spring-boot-starter-security")
-	implementation("io.jsonwebtoken:jjwt:0.9.1")
+	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.3")
+	implementation("io.jsonwebtoken:jjwt-api:0.12.3")
+	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.3")
+	implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
+	implementation("org.springframework.boot:spring-boot-starter-validation:3.1.1")
+	testImplementation ("org.junit.jupiter:junit-jupiter-api:5.7.0")
+	testRuntimeOnly ("org.junit.jupiter:junit-jupiter-engine:5.7.0")
+	testImplementation ("org.mockito:mockito-core:3.12.4")
+	implementation("org.springframework.boot:spring-boot-starter-security:3.1.1")
+	implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
+
 
 }
 
