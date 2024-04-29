@@ -12,6 +12,8 @@ data class Post(
     @Enumerated(EnumType.STRING)
     @Column
     val state: PostStatus,
+    @Column
+    val title: String,
     @Lob
     @Column(columnDefinition = "BYTEA")
     val image: ByteArray,
@@ -23,8 +25,9 @@ data class Post(
     val municipality: Municipality,
     @ManyToOne
     @JoinColumn(name = "category_id")
-    val category: Category
-
+    val category: Category,
+    @Column(name = "description")
+    val description: String
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

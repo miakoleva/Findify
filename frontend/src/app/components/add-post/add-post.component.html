@@ -6,14 +6,14 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form [formGroup]="form" (ngSubmit)="onSubmit()">
                     <div class="mb-3">
-                        <label for="itemName" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="itemName" placeholder="Name">
+                        <label for="itemTitle" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="itemTitle" placeholder="Name" formControlName="title">
                     </div>
                     <div class="mb-3">
                         <label for="inputCategory" class="form-label">Category</label>
-                        <select id="inputCategory" class="form-control">
+                        <select id="inputCategory" class="form-control" formControlName="category">
                             <option selected>Choose...</option>
                             <option>Keys</option>
                             <option>Personal Documents</option>
@@ -23,11 +23,11 @@
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Description</label>
                         <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
-                            placeholder="Write short description..."></textarea>
+                            placeholder="Write short description..." formControlName="description"></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="inputMunicipality" class="form-label">Municipality</label>
-                        <select id="inputMunicipality" class="form-control">
+                        <select id="inputMunicipality" class="form-control" formControlName="municipality">
                             <option selected>Choose...</option>
                             @for(m of municipalities; track m.id) {
                                 <option>{{m.name}}</option>
@@ -36,19 +36,19 @@
                     </div>
                     <div class="mb-3">
                         <label for="formFileSm" class="form-label">Insert photo</label>
-                        <input class="form-control form-control-sm" id="formFileSm" type="file">
+                        <input class="form-control form-control-sm" id="formFileSm" type="file" formControlName="image">
                     </div>
                     <div class="mb-3">
                         <fieldset>
                             <label class="form-label">Type</label>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="lostorfound" id="lost" value="lost"
+                                <input class="form-check-input" type="radio" name="lostorfound" id="lost" value="lost" formControlName="lostorfound"
                                     checked>
                                 <label class="form-check-label" for="lost">Lost item</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="lostorfound" id="found"
-                                    value="found">
+                                    value="found" formControlName="lostorfound">
                                 <label class="form-check-label" for="found">Found item</label>
                             </div>
                         </fieldset>

@@ -1,8 +1,8 @@
 package com.sorsix.finalproject.backend.domain
 
 enum class PostStatus {
-    LOST,
-    FOUND,
-    ACTIVE,
-    PENDING
+    ACTIVE_LOST,
+    ACTIVE_FOUND,
+    PENDING_LOST,
+    PENDING_FOUND
 }
