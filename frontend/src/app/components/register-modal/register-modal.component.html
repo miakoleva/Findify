@@ -1,66 +1,59 @@
-<!--
-<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
-    <form style="max-width: 300px;">
-        <div class="form-row mb-3">
-            <div class="col">
-                <label for="inputFirstName">First Name</label>
-                <input type="text" class="form-control" id="inputFirstName" placeholder="First Name">
-            </div>
-            <div class="col">
-                <label for="inputLastName">Last Name</label>
-                <input type="text" class="form-control" id="inputLastName" placeholder="Last Name">
-            </div>
-        </div>
-        <div class="form-group mb-3">
-            <label for="inputEmail">Email</label>
-            <input type="email" class="form-control" id="inputEmail" placeholder="Email">
-        </div>
-        <div class="form-group mb-3">
-            <label for="inputPassword">Password</label>
-            <input type="password" class="form-control" id="inputPassword" placeholder="Password">
-        </div>
-        <div class="form-group mb-3">
-            <label for="inputPhoneNumber">Phone Number</label>
-            <input type="text" class="form-control" id="inputPhoneNumber" placeholder="Phone Number">
-        </div>
-        <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
-    </form>
-</div>
--->
-<div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+<!-- <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div>
+        <input type="text" formControlName="firstName">
+    </div>
+    <div>
+        <input type="text" formControlName="lastName">
+    </div>
+    <div>
+        <input type="text" formControlName="email">
+    </div>
+    <div>
+        <input type="text" formControlName="password">
+    </div>
+    <div>
+        <input type="text" formControlName="phoneNumber">
+    </div>
+    <div>
+        <button type="submit">Submit</button>
+    </div>
+</form> -->
+
+
+<!-- <div class="modal fade" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true"> -->
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="signupModalLabel">Sign Up</h5>
+                <h5 class="modal-title">Sign Up</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form (ngSubmit)="submitForm()">
+                <form [formGroup]="form" (ngSubmit)="onSubmit()">
                     <div class="form-row mb-3">
                         <div class="col">
-                            <label for="inputFirstName">First Name</label>
-                            <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" name="firstName" [(ngModel)]="firstName">
+                            <label>First testete</label>
+                            <input type="text" class="form-control" placeholder="First Name" formControlName="firstName">
                         </div>
                         <div class="col">
-                            <label for="inputLastName">Last Name</label>
-                            <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" name="lastName" [(ngModel)]="lastName">
+                            <label>Last Name</label>
+                            <input type="text" class="form-control" placeholder="Last Name" formControlName="lastName">
                         </div>
                     </div>
                     <div class="form-group mb-3">
-                        <label for="inputEmail">Email</label>
-                        <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email" [(ngModel)]="email">
+                        <label>Email</label>
+                        <input type="email" class="form-control" placeholder="Email" formControlName="email">
                     </div>
                     <div class="form-group mb-3">
-                        <label for="inputPassword">Password</label>
-                        <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password" [(ngModel)]="password">
+                        <label>Password</label>
+                        <input type="password" class="form-control" placeholder="Password" formControlName="password">
                     </div>
                     <div class="form-group mb-3">
-                        <label for="inputPhoneNumber">Phone Number</label>
-                        <input type="text" class="form-control" id="inputPhoneNumber" placeholder="Phone Number" name="phoneNumber" [(ngModel)]="phoneNumber">
+                        <label>Phone Number</label>
+                        <input type="text" class="form-control" placeholder="Phone Number" formControlName="phoneNumber">
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+                    <button type="submit" class="btn-primary btn-block">Sign Up</button>
                 </form>
             </div>
         </div>
     </div>
-</div>
+<!-- </div> -->

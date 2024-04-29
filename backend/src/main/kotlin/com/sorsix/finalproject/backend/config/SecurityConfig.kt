@@ -36,6 +36,7 @@ class SecurityConfig(private val customAuthenticationProvider: CustomAuthenticat
                     .requestMatchers(HttpMethod.POST, "/api/login").permitAll()
                     .requestMatchers(HttpMethod.POST, "/api/register").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/home").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/municipalities").permitAll()
                     .requestMatchers("/api/**").authenticated()
                     .anyRequest().permitAll()
             }

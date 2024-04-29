@@ -1,51 +1,82 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+
+import { AbstractControl, FormBuilder, FormGroup, FormsModule, NgModel, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { User } from '../../models/User';
-import { FormsModule, NgModel } from '@angular/forms';
-import { UserService } from '../../services/user.service';
+import { AuthService } from '../../services/auth.service';
+import { UserDTO } from '../../models/UserDTO';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, ReactiveFormsModule],
   templateUrl: './register-modal.component.html',
   styleUrl: './register-modal.component.scss'
 })
 export class RegisterComponent implements OnInit {
 
-  firstName!: string;
-  lastName!: string;
-  email!: string;
-  password!: string;
-  phoneNumber!: string;
+  errorMessage = ''
+  submitted = false
+  form!: FormGroup
 
-  constructor(private router: Router,
-    private http: HttpClient,
-    private userService: UserService
-  ) { }
-
+  constructor(private formBuilder: FormBuilder,
+    private auth: AuthService,
+    private router: Router) { }
 
   ngOnInit(): void {
-    const myModal = document.getElementById('signupModal');
-    myModal?.addEventListener('hidden.bs.modal', () => {
-      this.router.navigate(['/home'])
+    this.form = this.formBuilder.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      password: ['',  [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(40)
+      ]],
+      phoneNumber: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]]
     });
   }
 
-  submitForm() {
-
-    const user = {
-      "role": "USER",
-      "firstName": this.firstName,
-      "lastName": this.lastName,
-      "email": this.email,
-      "password": this.password,
-      "phoneNumber": this.phoneNumber,
-    };
-
-    this.userService.save(user)
-
+  get f(): { [key: string]: AbstractControl } {
+    return this.form.controls;
   }
+
+
+  onSubmit(): void{
+    console.log('ova e formata' ,this.form);
+    this.errorMessage = ''
+    this.submitted = true
+    
+    if(this.form.invalid){
+      console.log('invalid form', this.form);
+      debugger;
+      return;
+    }
+
+    const data = this.form.value
+    console.log('ova e data', data)
+
+    const user: UserDTO = {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      password: data.password,
+      phoneNumber: data.phoneNumber,
+      email: data.email
+    }
+
+    console.log('ova e user', user)
+
+    this.auth.registerUser(user).subscribe({
+      next: () => {
+        debugger;
+        this.router.navigateByUrl('/home/login')
+      },
+      error: error => {
+        this.errorMessage = error.error
+        console.log("Error", error)
+      }
+    })
+  }
+
 
 }
