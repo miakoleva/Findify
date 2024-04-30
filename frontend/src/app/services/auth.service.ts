@@ -41,9 +41,6 @@ export class AuthService {
     // return moment().isBefore(this.getExpiration())
   }
 
-  getAuthToken(): string {
-    return localStorage.getItem('jwtToken') || '';
-  }
 
   getLoginStatus(): Observable<boolean> {
     return this.loginStatusSubject.asObservable()
@@ -51,6 +48,10 @@ export class AuthService {
 
   updateLoginStatus(isLoggedIn: boolean): void {
     this.loginStatusSubject.next(isLoggedIn);
+  }
+
+  getAuthToken() {
+    return localStorage.getItem("jwtToken")
   }
 
   private setSession(authResult: AuthenticationResponse) {

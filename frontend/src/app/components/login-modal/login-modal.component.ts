@@ -64,6 +64,8 @@ export class LoginComponent implements OnInit {
           if (loggedInUser) {
             // User object exists, store it in the user service or local storage
             this.userSerivce.setCurrentUser(loggedInUser);
+            localStorage.setItem("jwtToken", response.token)
+            console.log(response.token)
             console.log(loggedInUser);
           }
 
