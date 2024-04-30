@@ -10,9 +10,11 @@ export class AuthInterceptorService implements HttpInterceptor {
   constructor() { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    const jwtToken = localStorage.getItem("jwtToken");  
+    const jwtToken = localStorage.getItem("jwtToken");
 
-    if(jwtToken){
+    console.log("intercepted token", jwtToken)
+
+    if (jwtToken) {
       const cloned = req.clone({
         setHeaders: {
           Authorization: `Bearer ${jwtToken}`
@@ -21,7 +23,7 @@ export class AuthInterceptorService implements HttpInterceptor {
 
       return next.handle(cloned)
     }
-    else{
+    else {
       return next.handle(req)
     }
   }

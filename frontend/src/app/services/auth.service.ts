@@ -37,6 +37,10 @@ export class AuthService {
     return moment().isBefore(this.getExpiration())
   }
 
+  getAuthToken() {
+    return localStorage.getItem("jwtToken")
+  }
+
   private setSession(authResult: AuthenticationResponse) {
     const expiresAt = moment(authResult.expiresIn)
 
