@@ -5,13 +5,14 @@ import { NgFor } from '@angular/common';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PostDTO } from '../../models/PostDTO';
 import { PostService } from '../../services/post.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import { HomeComponent } from '../home/home.component';
 
 @Component({
   selector: 'app-add-post',
   standalone: true,
-  imports: [NgFor, ReactiveFormsModule],
+  imports: [NgFor, ReactiveFormsModule, HomeComponent, RouterLink],
   templateUrl: './add-post.component.html',
   styleUrl: './add-post.component.scss'
 })
@@ -58,7 +59,8 @@ export class AddPostComponent implements OnInit {
       description: data.description,
       municipality: data.municipality,
       image: data.image,
-      state: state
+      state: state,
+      user: this.userService.getCurrentUser()
     }
 
     this.service.addPost(post).subscribe({

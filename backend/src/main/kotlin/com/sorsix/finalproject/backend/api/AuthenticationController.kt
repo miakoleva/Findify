@@ -29,7 +29,6 @@ class AuthenticationController(
         val user = userService.findByEmail(payload.email)?.takeIf {
             hashService.checkBcrypt(payload.password, it.password)
         }
-        println(user)
 
         return user?.let { ResponseEntity.ok(LoginResponseDto(user = user, token = tokenService.createToken(it))) }
             ?: ResponseEntity.badRequest().body("Invalid Credentials.")
