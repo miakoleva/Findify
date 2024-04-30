@@ -6,6 +6,9 @@ import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { AbstractControl, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { AuthenticationRequest } from '../../models/AuthenticationRequest';
+import { User } from '../../models/User';
+import { UserService } from '../../services/user.service';
+import { GetUserResponse } from '../../models/GetUserResponse';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +25,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
     private auth: AuthService,
+    private userSerivce: UserService,
     private router: Router){}
 
   ngOnInit(): void {
@@ -53,8 +57,16 @@ export class LoginComponent implements OnInit {
     }
 
     this.auth.loginUser(user).subscribe({
-      next: () => {
+      next: (response: any) => {
         console.log("User is logged in")
+
+        const loggedInUser: User | undefined = response.user; // Extract user object if available
+          if (loggedInUser) {
+            // User object exists, store it in the user service or local storage
+            this.userSerivce.setCurrentUser(loggedInUser);
+            console.log(loggedInUser);
+          }
+
         this.router.navigateByUrl('/home')
       },
       error: error => {

@@ -8,6 +8,7 @@ import com.sorsix.finalproject.backend.domain.dto.RegisterDto
 import com.sorsix.finalproject.backend.service.UserService
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
+import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -28,8 +29,9 @@ class AuthenticationController(
         val user = userService.findByEmail(payload.email)?.takeIf {
             hashService.checkBcrypt(payload.password, it.password)
         }
+        println(user)
 
-        return user?.let { ResponseEntity.ok(LoginResponseDto(token = tokenService.createToken(it))) }
+        return user?.let { ResponseEntity.ok(LoginResponseDto(user = user, token = tokenService.createToken(it))) }
             ?: ResponseEntity.badRequest().body("Invalid Credentials.")
     }
 
@@ -45,7 +47,7 @@ class AuthenticationController(
             payload.password,
             payload.phoneNumber
         )
-        return ResponseEntity.ok(LoginResponseDto(token = tokenService.createToken(savedUser)))
+        return ResponseEntity.ok(LoginResponseDto(user = savedUser, token = tokenService.createToken(savedUser)))
     }
 
 

@@ -1,24 +1,26 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { GetUserResponse } from '../models/GetUserResponse';
+import { Observable } from 'rxjs';
+import { User } from '../models/User';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  // constructor(private http: HttpClient) { }
+  url = 'http://localhost:8080/api/user'
 
-  // save(user: any) {
-  //   this.http.post<void>('http://localhost:8080/api/register', user)
-  //     .subscribe({
-  //       next: () => {
-  //         console.log('User signed up successfully');
-  //         // Optionally, redirect the user to a different page
-  //       },
-  //       error: (err) => {
-  //         console.error('Error signing up user:', err);
-  //         // Handle error, e.g., display an error message to the user
-  //       }
-  //     });
-  // }
+  constructor(private http: HttpClient) { }
+
+  currentUser: User | undefined
+
+  setCurrentUser(user: User) {
+    this.currentUser = user;
+  }
+
+  getCurrentUser(): User {
+    return this.currentUser!!;
+  }
+
 }

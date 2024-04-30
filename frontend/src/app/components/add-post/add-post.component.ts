@@ -6,6 +6,7 @@ import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validator
 import { PostDTO } from '../../models/PostDTO';
 import { PostService } from '../../services/post.service';
 import { Router } from '@angular/router';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-add-post',
@@ -20,6 +21,7 @@ export class AddPostComponent implements OnInit {
   form!: FormGroup
 
   constructor(private municipalityService: MunicipalityService,
+    private userService: UserService,
     private formBuilder: FormBuilder,
     private service: PostService,
     private router: Router) { }
@@ -69,8 +71,6 @@ export class AddPostComponent implements OnInit {
       }
     })
   }
-
-
 
   municipalities: Municipality[] = []
 

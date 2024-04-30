@@ -13,4 +13,5 @@ import { AddPostComponent } from '../add-post/add-post.component';
 })
 export class NavBarComponent {
   
+
 }

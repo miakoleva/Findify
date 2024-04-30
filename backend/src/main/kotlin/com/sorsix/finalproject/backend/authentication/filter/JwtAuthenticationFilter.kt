@@ -29,7 +29,8 @@ class JwtAuthenticationFilter(private val authenticationManager: AuthenticationM
         return request.servletPath.equals("/api/login") ||
                 request.servletPath.equals("/api/register") ||
                 request.servletPath.equals("/api/home") ||
-                request.servletPath.equals("/api/municipalities")
+                request.servletPath.equals("/api/municipalities") ||
+                request.servletPath.equals("/api/user/get")
     }
 
 

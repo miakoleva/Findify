@@ -23,7 +23,7 @@ export class AuthService {
 
   loginUser(req: AuthenticationRequest) {
     return this.http.post<AuthenticationResponse>(`${this.url}/login`, req).pipe(
-      tap(it => this.setSession(it)),
+      tap(it => {this.setSession(it)}),
       catchError(error => throwError(() => new Error(error.error)))
     )
   }
