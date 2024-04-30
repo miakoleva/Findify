@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { UserDTO } from '../models/UserDTO';
 import { AuthenticationRequest } from '../models/AuthenticationRequest';
 import { AuthenticationResponse } from '../models/AuthenticationResponse';
-import { catchError, tap, throwError } from 'rxjs';
+import { Observable, Subject, catchError, tap, throwError } from 'rxjs';
 import moment from 'moment';
 
 
@@ -13,6 +13,7 @@ import moment from 'moment';
 export class AuthService {
 
   url = 'http://localhost:8080/api'
+  private loginStatusSubject: Subject<boolean> = new Subject<boolean>();
 
   constructor(private http: HttpClient) { }
 
@@ -23,7 +24,7 @@ export class AuthService {
 
   loginUser(req: AuthenticationRequest) {
     return this.http.post<AuthenticationResponse>(`${this.url}/login`, req).pipe(
-      tap(it => {this.setSession(it)}),
+      tap(it => { this.setSession(it) }),
       catchError(error => throwError(() => new Error(error.error)))
     )
   }
@@ -34,7 +35,22 @@ export class AuthService {
   }
 
   isLoggedIn() {
-    return moment().isBefore(this.getExpiration())
+    const jwtToken = localStorage.getItem('jwtToken');
+    return !!jwtToken;
+
+    // return moment().isBefore(this.getExpiration())
+  }
+
+  getAuthToken(): string {
+    return localStorage.getItem('jwtToken') || '';
+  }
+
+  getLoginStatus(): Observable<boolean> {
+    return this.loginStatusSubject.asObservable()
+  }
+
+  updateLoginStatus(isLoggedIn: boolean): void {
+    this.loginStatusSubject.next(isLoggedIn);
   }
 
   private setSession(authResult: AuthenticationResponse) {

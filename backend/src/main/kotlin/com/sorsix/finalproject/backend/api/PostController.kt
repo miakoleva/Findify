@@ -11,7 +11,7 @@ import java.net.URI
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/posts")
 class PostController (private val postService: PostService) {
 
     @GetMapping("/lost-items")
