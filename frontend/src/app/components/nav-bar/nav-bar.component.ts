@@ -12,6 +12,8 @@ import { AddPostComponent } from '../add-post/add-post.component';
   styleUrl: './nav-bar.component.scss'
 })
 export class NavBarComponent {
+
+  loggedIn = false
   
 
 }
