@@ -1,40 +1,18 @@
-<!-- <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div>
-        <input type="text" formControlName="firstName">
-    </div>
-    <div>
-        <input type="text" formControlName="lastName">
-    </div>
-    <div>
-        <input type="text" formControlName="email">
-    </div>
-    <div>
-        <input type="text" formControlName="password">
-    </div>
-    <div>
-        <input type="text" formControlName="phoneNumber">
-    </div>
-    <div>
-        <button type="submit">Submit</button>
-    </div>
-</form> -->
-
-
-<!-- <div class="modal fade" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true"> -->
+<div  class="modal-fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Sign Up</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" [routerLink]="['/home']"></button>
             </div>
             <div class="modal-body">
                 <form [formGroup]="form" (ngSubmit)="onSubmit()">
                     <div class="form-row mb-3">
-                        <div class="col">
+                        <div class="form-group mb-3">
                             <label>First testete</label>
                             <input type="text" class="form-control" placeholder="First Name" formControlName="firstName">
                         </div>
-                        <div class="col">
+                        <div class="form-group mb-3">
                             <label>Last Name</label>
                             <input type="text" class="form-control" placeholder="Last Name" formControlName="lastName">
                         </div>
@@ -51,9 +29,9 @@
                         <label>Phone Number</label>
                         <input type="text" class="form-control" placeholder="Phone Number" formControlName="phoneNumber">
                     </div>
-                    <button type="submit" class="btn-primary btn-block">Sign Up</button>
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
                 </form>
             </div>
         </div>
     </div>
-<!-- </div> -->
+</div>
