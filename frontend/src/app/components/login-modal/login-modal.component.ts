@@ -8,7 +8,6 @@ import { AuthService } from '../../services/auth.service';
 import { AuthenticationRequest } from '../../models/AuthenticationRequest';
 import { User } from '../../models/User';
 import { UserService } from '../../services/user.service';
-import { GetUserResponse } from '../../models/GetUserResponse';
 
 @Component({
   selector: 'app-login',

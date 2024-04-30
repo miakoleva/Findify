@@ -16,6 +16,8 @@ class JwtAuthenticationFilter(private val authenticationManager: AuthenticationM
     ) {
         try{
             val jwt: String = request.getHeader("Authorization")
+            //.substringAfter("Bearer ")
+            //napravi go ova ako ne treba Bearer da go ima vo tokenot
             val authentication = BearerTokenAuthenticationToken(jwt)
             val authResult = authenticationManager.authenticate(authentication)
             SecurityContextHolder.getContext().authentication = authResult
