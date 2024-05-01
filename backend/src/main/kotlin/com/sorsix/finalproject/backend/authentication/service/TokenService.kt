@@ -21,7 +21,7 @@ class TokenService(
             .issuedAt(Instant.now())
             .expiresAt(Instant.now().plus(30L, ChronoUnit.DAYS))
             .subject(user.firstName)
-//            .claim("userId", user.id)
+            .claim("userId", user.id)
             .claim("email", user.email)
             .build()
         return jwtEncoder.encode(JwtEncoderParameters.from(jwsHeader, claims)).tokenValue

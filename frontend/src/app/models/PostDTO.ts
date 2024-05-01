@@ -1,5 +1,6 @@
 import { Category } from "./Category";
 import { Municipality } from "./Municipality";
+import { PostStatus } from "./PostStatus";
 import { User } from "./User";
 
 export interface PostDTO {
@@ -7,7 +8,7 @@ export interface PostDTO {
     category: Category,
     description: string,
     municipality: Municipality,
-    image: any,
+    //image: any,
     state: string,
     user: User
 }

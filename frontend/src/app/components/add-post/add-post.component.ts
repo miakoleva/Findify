@@ -8,6 +8,8 @@ import { PostService } from '../../services/post.service';
 import { Router, RouterLink } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { HomeComponent } from '../home/home.component';
+import { Category } from '../../models/Category';
+import { PostStatus } from '../../models/PostStatus';
 
 @Component({
   selector: 'app-add-post',
@@ -51,17 +53,28 @@ export class AddPostComponent implements OnInit {
     this.errorMessage = ''
 
     const lostOrFoundValue = this.form.get('lostorfound')!!.value;
-    const state = lostOrFoundValue ? 'PENDING_LOST' : 'PENDING_FOUND';
+    const state = lostOrFoundValue ? "PENDING_LOST" : "PENDING_FOUND";
+
+    const municipality: Municipality = {
+      id: 1,
+      name: data.municipality
+    }
+    const category: Category = {
+      id: 1,
+      categoryName: data.category
+    }
 
     const post: PostDTO = {
       title: data.title,
-      category: data.category,
+      category: category,
       description: data.description,
-      municipality: data.municipality,
-      image: data.image,
+      municipality: municipality,
+      //image: data.image,
       state: state,
-      user: this.userService.getCurrentUser()
+      user: this.userService.currentUser!!
     }
+    
+    console.log(post)
 
     this.service.addPost(post).subscribe({
       next: () => {

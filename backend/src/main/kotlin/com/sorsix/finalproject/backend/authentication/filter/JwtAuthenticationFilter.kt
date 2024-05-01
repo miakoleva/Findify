@@ -6,23 +6,25 @@ import jakarta.servlet.http.HttpServletResponse
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.oauth2.server.resource.authentication.BearerTokenAuthenticationToken
+import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 
-class JwtAuthenticationFilter(private val authenticationManager: AuthenticationManager): OncePerRequestFilter() {
+@Component
+class JwtAuthenticationFilter(private val authenticationManager: AuthenticationManager) : OncePerRequestFilter() {
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
-        try{
-            val jwt: String = request.getHeader("Authorization")
-            //.substringAfter("Bearer ")
-            //napravi go ova ako ne treba Bearer da go ima vo tokenot
+        try {
+            val jwt: String = request.getHeader("Authorization").substringAfter("Bearer ")
             val authentication = BearerTokenAuthenticationToken(jwt)
             val authResult = authenticationManager.authenticate(authentication)
             SecurityContextHolder.getContext().authentication = authResult
-        }catch (e: Exception){
-            response.status = 401
+            filterChain.doFilter(request, response)
+        } catch (e: Exception) {
+            //response.status = 401
+            println(e.message)
             return
         }
     }
@@ -34,7 +36,5 @@ class JwtAuthenticationFilter(private val authenticationManager: AuthenticationM
                 request.servletPath.equals("/api/municipalities") ||
                 request.servletPath.equals("/api/user/get")
     }
-
-
 
 }

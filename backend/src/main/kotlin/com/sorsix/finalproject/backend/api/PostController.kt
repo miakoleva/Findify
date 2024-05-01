@@ -11,7 +11,7 @@ import java.net.URI
 
 
 @RestController
-@RequestMapping("/api/posts")
+@RequestMapping("/api")
 class PostController (private val postService: PostService) {
 
     @GetMapping("/lost-items")
@@ -48,6 +48,7 @@ class PostController (private val postService: PostService) {
             image = payload.image,
             state = payload.state
         )
+        postService.create(post)
         return ResponseEntity.created(URI.create("/posts/${post.id}")).body(post)
     }
 

@@ -2,6 +2,7 @@ package com.sorsix.finalproject.backend.config
 
 import com.sorsix.finalproject.backend.authentication.authProvider.CustomAuthenticationProvider
 import com.sorsix.finalproject.backend.authentication.filter.JwtAuthenticationFilter
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
@@ -13,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
+
 
 @Configuration
 @EnableWebSecurity

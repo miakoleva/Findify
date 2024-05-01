@@ -1,6 +1,7 @@
 package com.sorsix.finalproject.backend.authentication.userDetailsService
 
 import com.sorsix.finalproject.backend.authentication.UserSecurity
+import com.sorsix.finalproject.backend.domain.User
 import com.sorsix.finalproject.backend.repository.UserRepository
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService

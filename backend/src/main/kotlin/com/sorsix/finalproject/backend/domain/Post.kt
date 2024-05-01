@@ -29,6 +29,7 @@ data class Post(
     @Column(name = "description")
     val description: String
 ) {
+    constructor() : this(1L, PostStatus.PENDING_LOST, "Test", "image".toByteArray(), User(), Municipality(), Category(1L, "Драчево"), "test")
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
