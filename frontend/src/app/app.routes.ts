@@ -5,6 +5,8 @@ import { FoundItemsComponent } from './components/found-items/found-items.compon
 import { RegisterComponent } from './components/register-modal/register-modal.component';
 import { LoginComponent } from './components/login-modal/login-modal.component';
 import { AddPostComponent } from './components/add-post/add-post.component';
+import { PendingComponent } from './components/pending/pending.component';
+import { YourPostsComponent } from './components/your-posts/your-posts.component';
 
 
 export const routes: Routes = [
@@ -14,5 +16,7 @@ export const routes: Routes = [
     { path: 'lost-items', component: LostItemsComponent },
     { path: 'found-items', component: FoundItemsComponent },
     { path: 'add-post', component: AddPostComponent},
+    { path: 'pending', component: PendingComponent},
+    { path: 'your-posts', component: YourPostsComponent },
     { path: '**', redirectTo: 'home' }
 ];

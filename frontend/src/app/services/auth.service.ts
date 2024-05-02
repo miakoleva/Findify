@@ -56,9 +56,10 @@ export class AuthService {
 
   private setSession(authResult: AuthenticationResponse) {
     const expiresAt = moment(authResult.expiresIn)
-
+    console.log(authResult)
     localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()))
     localStorage.setItem('jwtToken', authResult.jwt)
+    localStorage.setItem('user', JSON.stringify(authResult.user))
   }
 
   private getExpiration() {

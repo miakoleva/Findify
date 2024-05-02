@@ -6,11 +6,13 @@ import { AddPostComponent } from '../add-post/add-post.component';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/User';
 import { UserService } from '../../services/user.service';
+import { PendingComponent } from '../pending/pending.component';
+import { YourPostsComponent } from '../your-posts/your-posts.component';
 
 @Component({
   selector: 'app-nav-bar',
   standalone: true,
-  imports: [RouterLink, LoginComponent, RegisterComponent, AddPostComponent],
+  imports: [RouterLink, LoginComponent, RegisterComponent, AddPostComponent, PendingComponent, YourPostsComponent],
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.scss'
 })
@@ -20,7 +22,7 @@ export class NavBarComponent implements OnInit {
   currentUser: User | undefined
 
   constructor(private authService: AuthService, private router: Router, private userService: UserService) {
-    this.currentUser = this.userService.currentUser
+    this.currentUser = JSON.parse(localStorage.getItem('user')!!)
    }
 
   ngOnInit() {
@@ -31,13 +33,10 @@ export class NavBarComponent implements OnInit {
     });
   }
 
-
-  loggedin() {
-    console.log(this.loggedIn)
-  }
   logOut() {
     console.log('logging out')
     localStorage.removeItem('jwtToken')
+    localStorage.removeItem('user')
     this.authService.updateLoginStatus(false);
     this.router.navigate(['/home']);
 

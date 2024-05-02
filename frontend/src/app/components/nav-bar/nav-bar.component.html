@@ -1,6 +1,6 @@
 <header class="navbar navbar-expand-md navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" [routerLink]="['/home']" (click)="loggedin()">Findify</a>
+        <a class="navbar-brand" [routerLink]="['/home']">Findify</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -23,11 +23,11 @@
                 }
                 @if(loggedIn) {
                 <li class="nav-item">
-                    <a class="nav-link" href="">Your Posts</a> <!--Replace href with routerLink-->
+                    <a class="nav-link" [routerLink]="['/your-posts']">Your Posts</a>
                 </li>
                 @if(currentUser?.role === "ROLE_ADMIN") {
                 <li class="nav-item">
-                    <a class="nav-link" href="">Pending</a> <!--Replace href with routerLink-->
+                    <a class="nav-link" [routerLink]="['/pending']">Pending</a>
                 </li>
                 }
 
