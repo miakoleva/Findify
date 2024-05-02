@@ -17,10 +17,9 @@
                         <div class="mb-3">
                             <label for="inputCategory" class="form-label">Category</label>
                             <select id="inputCategory" class="form-control" formControlName="category">
-                                <option selected>Choose...</option>
-                                <option>Keys</option>
-                                <option>Personal Documents</option>
-                                <option>Phone</option>
+                                @for(c of categories; track c.id){
+                                    <option>{{c.categoryName}}</option>
+                                }
                             </select>
                         </div>
                         <div class="mb-3">
@@ -39,8 +38,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="formFileSm" class="form-label">Insert photo</label>
-                            <input class="form-control form-control-sm" id="formFileSm" type="file"
-                                formControlName="image">
+                            <input class="form-control form-control-sm" id="formFileSm" type="file" (change)="onFileSelected($event)">
                         </div>
                         <div class="mb-3">
                             <fieldset>

@@ -10,6 +10,7 @@ import { UserService } from '../../services/user.service';
 import { HomeComponent } from '../home/home.component';
 import { Category } from '../../models/Category';
 import { PostStatus } from '../../models/PostStatus';
+import { CategoryService } from '../../services/category.service';
 
 @Component({
   selector: 'app-add-post',
@@ -27,18 +28,20 @@ export class AddPostComponent implements OnInit {
     private userService: UserService,
     private formBuilder: FormBuilder,
     private service: PostService,
-    private router: Router) { }
+    private router: Router,
+    private categoryService: CategoryService) { }
 
 
   ngOnInit(): void {
     this.getMunicipalities()
+    this.getCategories()
 
     this.form = this.formBuilder.group({
       title: ['', Validators.required],
       category: ['', Validators.required],
       description: ['', Validators.required],
-      image: ['', Validators.required],
       municipality: ['', Validators.required],
+      image: ['', Validators.required],
       lostorfound: ['lost', Validators.required]
     });
   }
@@ -46,6 +49,14 @@ export class AddPostComponent implements OnInit {
   get f(): { [key: string]: AbstractControl } {
     return this.form.controls;
   }
+
+  onFileSelected(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.form.get('image')?.setValue(file);
+    }
+  }
+  
 
 
   onSubmit() {
@@ -64,19 +75,25 @@ export class AddPostComponent implements OnInit {
       categoryName: data.category
     }
 
-    const post: PostDTO = {
-      title: data.title,
-      category: category,
-      description: data.description,
-      municipality: municipality,
-      //image: data.image,
-      state: state,
-      user: this.userService.currentUser!!
+
+    if(this.form.invalid){
+      console.log(this.form)
+      console.log("form is invalid")
+      return;
     }
     
-    console.log(post)
+    console.log(this.form)
 
-    this.service.addPost(post).subscribe({
+    let formData = new FormData();
+
+    formData.append("title", this.form.get('title')!!.value)
+    formData.append("category", this.form.get('category')!!.value)
+    formData.append("description", this.form.get('description')!!.value)
+    formData.append("municipality", this.form.get('municipality')!!.value)
+    formData.append("image", this.form.get('image')!!.value)
+    formData.append("state", state)
+
+    this.service.addPost(formData).subscribe({
       next: () => {
         this.router.navigateByUrl('/home')
       },
@@ -93,6 +110,14 @@ export class AddPostComponent implements OnInit {
     this.municipalityService.getMunicipalities().subscribe((it) => {
       this.municipalities = it;
     });
+  }
+
+  categories: Category[] = []
+
+  getCategories(){
+    this.categoryService.getCategories().subscribe((it) => {
+      this.categories = it;
+    })
   }
 
 }

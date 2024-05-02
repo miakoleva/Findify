@@ -8,52 +8,40 @@ data class Post(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    val id: Long,
+    val id: Long = 0L,
     @Enumerated(EnumType.STRING)
     @Column
-    val state: PostStatus,
+    val state: PostStatus = PostStatus.PENDING_LOST,
     @Column
-    val title: String,
+    val title: String = "",
     @Lob
     @Column(columnDefinition = "BYTEA")
-    val image: ByteArray,
+    val image: ByteArray = ByteArray(1),
     @ManyToOne
     @JoinColumn(name = "user_id")
-    val user: User,
+    val user: User = User(),
     @ManyToOne
     @JoinColumn(name = "municipality_id")
-    val municipality: Municipality,
+    val municipality: Municipality = Municipality(),
     @ManyToOne
     @JoinColumn(name = "category_id")
-    val category: Category,
+    val category: Category = Category(),
     @Column(name = "description")
-    val description: String
+    val description: String = ""
 ) {
-    constructor() : this(1L, PostStatus.PENDING_LOST, "Test", "image".toByteArray(), User(), Municipality(), Category(1L, "Драчево"), "test")
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
         other as Post
 
-        if (id != other.id) return false
-        if (state != other.state) return false
         if (!image.contentEquals(other.image)) return false
-        if (user != other.user) return false
-        if (municipality != other.municipality) return false
-        if (category != other.category) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        var result = id.hashCode()
-        result = 31 * result + state.hashCode()
-        result = 31 * result + image.contentHashCode()
-        result = 31 * result + user.hashCode()
-        result = 31 * result + municipality.hashCode()
-        result = 31 * result + category.hashCode()
-        return result
+        return image.contentHashCode()
     }
 }
 

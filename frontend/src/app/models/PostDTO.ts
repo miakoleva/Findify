@@ -10,5 +10,5 @@ export interface PostDTO {
     municipality: Municipality,
     //image: any,
     state: string,
-    user: User
+    // user: User
 }

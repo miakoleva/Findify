@@ -1,18 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PostDTO } from '../models/PostDTO';
+import { Post } from '../models/Post';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
 
-  url = 'http://localhost:4200/api'
+  url = 'http://localhost:8080/api'
 
   constructor(private http: HttpClient) {}
 
-  addPost(post: PostDTO){
+  addPost(formData: FormData): Observable<Post> {
     console.log("Posted.")
-    return this.http.post(`${this.url}/new-post`, post)
+    return this.http.post<Post>(`${this.url}/new-post`, formData)
   }
 }
