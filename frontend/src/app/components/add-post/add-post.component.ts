@@ -64,12 +64,14 @@ export class AddPostComponent implements OnInit {
       categoryName: data.category
     }
 
+    
+
     const post: PostDTO = {
       title: data.title,
       category: category,
       description: data.description,
       municipality: municipality,
-      //image: data.image,
+      image: data.image,
       state: state,
       user: this.userService.currentUser!!
     }

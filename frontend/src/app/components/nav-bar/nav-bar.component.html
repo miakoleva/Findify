@@ -1,6 +1,6 @@
 <header class="navbar navbar-expand-md navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" [routerLink]="['/home']">Findify</a>
+        <a class="navbar-brand" [routerLink]="['/home']" (click)="loggedin()">Findify</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -13,12 +13,11 @@
                 <li class="nav-item">
                     <a class="nav-link" [routerLink]="['/login']" data-bs-toggle="modal"
                         data-bs-target="#loginModal">Log In</a>
-                    <!-- <app-login></app-login> -->
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['/signup']" data-bs-toggle="modal" data-bs-target="#signupModal">Sign
+                    <a class="nav-link" [routerLink]="['/signup']" data-bs-toggle="modal"
+                        data-bs-target="#signupModal">Sign
                         Up</a>
-                    <!-- <app-register></app-register> -->
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="">Your Posts</a> <!--Replace href with routerLink-->
@@ -26,12 +25,14 @@
                 <li class="nav-item">
                     <a class="nav-link" href="">Pending</a> <!--Replace href with routerLink-->
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="['/home']" (click)="logOut()">Log Out</a>
+                    <!--Replace href with routerLink-->
+                </li>
             </ul>
         </div>
     </div>
     <div class="d-flex">
-        <button type="button" [routerLink]="['/add-post']" class="btn btn-outline-primary">Make
-            a post</button>
-        <!-- <app-add-post></app-add-post> -->
+        <button type="button" [routerLink]="['/add-post']" class="btn btn-outline-primary">Make a post</button>
     </div>
 </header>
