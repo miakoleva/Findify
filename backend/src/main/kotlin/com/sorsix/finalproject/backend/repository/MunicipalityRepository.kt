@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface MunicipalityRepository: JpaRepository<Municipality, Long>{
 
+    fun findByName(name: String): Municipality
+
 }

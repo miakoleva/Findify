@@ -5,14 +5,14 @@ import com.sorsix.finalproject.backend.domain.Municipality
 import com.sorsix.finalproject.backend.domain.PostStatus
 import com.sorsix.finalproject.backend.domain.User
 
+//needs to be deleted
 data class PostDto(
     val title: String,
     val category: Category,
     val description: String,
     val municipality: Municipality,
     val image: ByteArray,
-    val state: PostStatus,
-    val user: User
+    val state: PostStatus
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

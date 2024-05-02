@@ -4,4 +4,5 @@ import com.sorsix.finalproject.backend.domain.Municipality
 
 interface MunicipalityService {
     fun listAll(): List<Municipality>
+    fun findMunicipalityByName(name: String): Municipality
 }

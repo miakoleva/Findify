@@ -2,17 +2,22 @@ package com.sorsix.finalproject.backend.api
 
 import com.sorsix.finalproject.backend.domain.Post
 import com.sorsix.finalproject.backend.domain.PostStatus
-import com.sorsix.finalproject.backend.domain.dto.PostDto
+import com.sorsix.finalproject.backend.service.CategoryService
+import com.sorsix.finalproject.backend.service.MunicipalityService
 import com.sorsix.finalproject.backend.service.PostService
-import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import java.net.URI
+import org.springframework.web.multipart.MultipartFile
 
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api")
-class PostController (private val postService: PostService) {
+class PostController(
+    private val postService: PostService,
+    private val categoryService: CategoryService,
+    private val municipalityService: MunicipalityService
+) {
 
     @GetMapping("/lost-items")
     fun getLostItems(): ResponseEntity<List<Post>> {
@@ -37,19 +42,23 @@ class PostController (private val postService: PostService) {
     }
 
     @PostMapping("/new-post")
-    fun addPost(@Valid @RequestBody payload: PostDto): ResponseEntity<Post> {
-        val post = Post(
-            id = 1L,
-            title = payload.title,
-            description = payload.description,
-            municipality = payload.municipality,
-            user = payload.user,
-            category = payload.category,
-            image = payload.image,
-            state = payload.state
-        )
-        postService.create(post)
-        return ResponseEntity.created(URI.create("/posts/${post.id}")).body(post)
+    fun addPost(
+        @RequestParam title: String,
+        @RequestParam category: String,
+        @RequestParam description: String,
+        @RequestParam municipality: String,
+        @RequestParam image: MultipartFile,
+        @RequestParam state: String
+    ): ResponseEntity<Post> {
+
+        val cat = categoryService.findCategoryByName(category)
+        val mun = municipalityService.findMunicipalityByName(municipality)
+        val s: PostStatus = PostStatus.valueOf(state)
+
+
+        val post = postService.create(title, cat, description, mun, image, s)
+
+        return ResponseEntity.ok().body(post)
     }
 
 }

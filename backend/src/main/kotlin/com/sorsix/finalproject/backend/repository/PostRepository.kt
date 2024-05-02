@@ -8,5 +8,4 @@ import org.springframework.stereotype.Repository
 @Repository
 interface PostRepository: JpaRepository<Post, Long> {
     fun findByState(status: PostStatus): List<Post>
-    fun save(post: Post): Post
 }
