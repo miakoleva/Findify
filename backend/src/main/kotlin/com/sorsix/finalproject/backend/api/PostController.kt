@@ -29,7 +29,7 @@ class PostController(
         return ResponseEntity.ok(postService.findByStatus(PostStatus.ACTIVE_FOUND))
     }
 
-    @GetMapping("/pending-items")
+    @GetMapping("/pending-posts")
     fun getPendingItems(): ResponseEntity<List<Post>> {
         return ResponseEntity.ok(postService.findByStatus(PostStatus.PENDING_LOST) + postService.findByStatus(PostStatus.PENDING_FOUND))
     }
@@ -40,6 +40,22 @@ class PostController(
             ResponseEntity.ok(it)
         } ?: ResponseEntity.notFound().build()
     }
+
+    @PutMapping("/posts/{id}")
+    fun updatePost(@PathVariable id: Long): ResponseEntity<Post> {
+        val post = postService.findById(id)
+        val postStatus = if (post?.state == PostStatus.PENDING_LOST) {
+            PostStatus.ACTIVE_LOST
+        } else {
+            PostStatus.ACTIVE_FOUND
+        }
+        postService.updateState(id, postStatus)
+        return ResponseEntity.ok(post)
+    }
+
+    @DeleteMapping("/posts/{id}")
+    fun deletePost(@PathVariable id: Long) = postService.deleteById(id)
+
 
     @PostMapping("/new-post")
     fun addPost(

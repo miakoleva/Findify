@@ -11,6 +11,6 @@ export class MunicipalityService {
   constructor(private http: HttpClient) { }
 
   getMunicipalities(): Observable<Municipality[]> {
-    return this.http.get<Municipality[]>('http://localhost:4200/api/municipalities');
+    return this.http.get<Municipality[]>('http://localhost:8080/api/municipalities');
   }
 }

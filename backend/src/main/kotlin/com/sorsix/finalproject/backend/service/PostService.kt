@@ -7,5 +7,7 @@ interface PostService {
     fun listAll(): List<Post>
     fun findByStatus(status: PostStatus): List<Post>
     fun findById(id: Long): Post?
+    fun updateState(id: Long, newState: PostStatus): Post?
+    fun deleteById(id: Long)
     fun create(title: String, category: Category, description: String, municipality: Municipality, image: MultipartFile, status: PostStatus): Post
 }

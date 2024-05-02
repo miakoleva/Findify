@@ -1,16 +1,15 @@
 <app-nav-bar></app-nav-bar>
 <div class="container">
     <div class="row">
-        @for(i of arr; track i) {
+        @for(post of posts; track post.id) {
         <div class="col-md-4" style="width: 18rem;">
             <div class="card mb-4">
                 <img class="card-img-top" src="../../../assets/lost-item.jpg" alt="Lost item">
                 <div class="card-body">
-                    <h5 class="card-title">Item name</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                        card's content. (Short description for the item)</p>
-                    <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#postModal">Details</a>
-                    <app-post-details-modal></app-post-details-modal>
+                    <h5 class="card-title">{{post.title}}</h5>
+                    <p class="card-text">{{post.description}}</p>
+                    <a [routerLink]="['/posts', post.id]" class="btn btn-primary">Details</a>
+                    <!-- <app-post-details-modal></app-post-details-modal> -->
                 </div>
             </div>
         </div>

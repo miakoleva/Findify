@@ -7,6 +7,7 @@ import { LoginComponent } from './components/login-modal/login-modal.component';
 import { AddPostComponent } from './components/add-post/add-post.component';
 import { PendingComponent } from './components/pending/pending.component';
 import { YourPostsComponent } from './components/your-posts/your-posts.component';
+import { PostDetailsModalComponent } from './components/post-details-modal/post-details-modal.component';
 
 
 export const routes: Routes = [
@@ -16,7 +17,8 @@ export const routes: Routes = [
     { path: 'lost-items', component: LostItemsComponent },
     { path: 'found-items', component: FoundItemsComponent },
     { path: 'add-post', component: AddPostComponent},
-    { path: 'pending', component: PendingComponent},
+    { path: 'pending-posts', component: PendingComponent},
     { path: 'your-posts', component: YourPostsComponent },
+    { path: 'posts/:id', component: PostDetailsModalComponent},
     { path: '**', redirectTo: 'home' }
 ];
