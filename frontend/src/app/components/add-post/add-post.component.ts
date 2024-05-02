@@ -66,16 +66,6 @@ export class AddPostComponent implements OnInit {
     const lostOrFoundValue = this.form.get('lostorfound')!!.value;
     const state = lostOrFoundValue ? "PENDING_LOST" : "PENDING_FOUND";
 
-    const municipality: Municipality = {
-      id: 1,
-      name: data.municipality
-    }
-    const category: Category = {
-      id: 1,
-      categoryName: data.category
-    }
-
-
     if(this.form.invalid){
       console.log(this.form)
       console.log("form is invalid")

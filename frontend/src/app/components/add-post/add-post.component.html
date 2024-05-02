@@ -17,6 +17,7 @@
                         <div class="mb-3">
                             <label for="inputCategory" class="form-label">Category</label>
                             <select id="inputCategory" class="form-control" formControlName="category">
+                                <option>Choose...</option>
                                 @for(c of categories; track c.id){
                                     <option>{{c.categoryName}}</option>
                                 }
