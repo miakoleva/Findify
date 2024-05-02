@@ -30,6 +30,10 @@ export class PostService {
     return this.http.get<Post>(`${this.url}/posts/${id}`)
   }
 
+  getPostsByUserId(id: number): Observable<Post[]> {
+    return this.http.get<Post[]>(`${this.url}/posts/users/${id}`)
+  }
+
   approvePost(post: Post): Observable<Post> {
     return this.http.put<Post>(`${this.url}/posts/${post.id}`, post)
   }

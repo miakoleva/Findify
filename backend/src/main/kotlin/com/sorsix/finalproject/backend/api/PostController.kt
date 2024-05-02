@@ -41,6 +41,15 @@ class PostController(
         } ?: ResponseEntity.notFound().build()
     }
 
+    @GetMapping("/posts/user/{id}")
+    fun getPostsByUserId(@PathVariable id: Long): ResponseEntity<List<Post>> {
+        return postService.listAll()
+            .stream()
+            .filter { post -> post.user.id == id }
+            .toList()
+            .let { ResponseEntity.ok(it) }
+    }
+
     @PutMapping("/posts/{id}")
     fun updatePost(@PathVariable id: Long): ResponseEntity<Post> {
         val post = postService.findById(id)

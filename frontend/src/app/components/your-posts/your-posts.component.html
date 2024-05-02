@@ -1,1 +1,16 @@
-<p>your-posts works!</p>
+<div class="container">
+    <div class="row">
+        @for(post of posts; track post.id) {
+        <div class="col-md-4" style="width: 18rem;">
+            <div class="card mb-4">
+                <img class="card-img-top" src="../../../assets/lost-item.jpg" alt="Lost item">
+                <div class="card-body">
+                    <h5 class="card-title">{{post.title}}</h5>
+                    <p class="card-text">{{post.description}}</p>
+                    <a [routerLink]="['/posts', post.id]" class="btn btn-primary">Details</a>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</div>
