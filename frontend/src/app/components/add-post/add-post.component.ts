@@ -25,7 +25,6 @@ export class AddPostComponent implements OnInit {
   form!: FormGroup
 
   constructor(private municipalityService: MunicipalityService,
-    private userService: UserService,
     private formBuilder: FormBuilder,
     private service: PostService,
     private router: Router,

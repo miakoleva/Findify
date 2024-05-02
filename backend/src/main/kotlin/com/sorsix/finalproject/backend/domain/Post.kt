@@ -10,7 +10,7 @@ data class Post(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    val id: Long = 0L,
+    val id: Long = 1L,
     @Enumerated(EnumType.STRING)
     @Column
     val state: PostStatus = PostStatus.PENDING_LOST,
