@@ -33,7 +33,6 @@
 
                 <li class="nav-item">
                     <a class="nav-link" [routerLink]="['/home']" (click)="logOut()">Log Out</a>
-                    <!--Replace href with routerLink-->
                 </li>
                 }
 
@@ -41,9 +40,9 @@
         </div>
     </div>
     @if (loggedIn) {
-        <div class="d-flex">
+    <div class="d-flex">
         <button type="button" [routerLink]="['/add-post']" class="btn btn-outline-primary">Make a post</button>
     </div>
     }
-    
+
 </header>
