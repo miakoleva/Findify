@@ -58,7 +58,6 @@ export class AddPostComponent implements OnInit {
   }
   
 
-
   onSubmit() {
     const data = this.form.value
     this.errorMessage = ''

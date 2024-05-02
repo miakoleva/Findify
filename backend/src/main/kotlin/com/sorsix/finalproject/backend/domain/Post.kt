@@ -1,6 +1,8 @@
 package com.sorsix.finalproject.backend.domain
 
 import jakarta.persistence.*
+import org.hibernate.annotations.Type
+import kotlin.reflect.typeOf
 
 @Entity
 @Table(name = "posts")
@@ -14,8 +16,7 @@ data class Post(
     val state: PostStatus = PostStatus.PENDING_LOST,
     @Column
     val title: String = "",
-    @Lob
-    @Column(columnDefinition = "BYTEA")
+    @Column(columnDefinition = "BYTEA", name = "image")
     val image: ByteArray = ByteArray(1),
     @ManyToOne
     @JoinColumn(name = "user_id")

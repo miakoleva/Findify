@@ -28,8 +28,26 @@ class PostServiceImpl(private val postRepository: PostRepository, private val us
         val user = userService.findByEmail(email)
         val byteArr = image.bytes
 
-        val post = Post(1L, status, title, byteArr, user!!, municipality, category, description)
-        return this.postRepository.save(post)
+//        val post = Post(
+//            id = 1L,
+//            state = status,
+//            title = title,
+//            image = byteArr,
+//            user = user!!,
+//            municipality = municipality,
+//            category = category,
+//            description = description
+//        )
+        return this.postRepository.save(Post(
+            id = 1L,
+            state = status,
+            title = title,
+            image = byteArr,
+            user = user!!,
+            municipality = municipality,
+            category = category,
+            description = description
+        ))
 
     }
 
