@@ -15,6 +15,11 @@ class PostServiceImpl(private val postRepository: PostRepository, private val us
     override fun listAll(): List<Post> = postRepository.findAll()
     override fun findByStatus(status: PostStatus): List<Post> = postRepository.findByState(status)
     override fun findById(id: Long): Post? = postRepository.findByIdOrNull(id)
+    override fun deleteById(id: Long) = postRepository.deleteById(id)
+    override fun updateState(id: Long, newState: PostStatus): Post? {
+        postRepository.updateStateById(id, newState)
+        return postRepository.findByIdOrNull(id)
+    }
 
     override fun create(
         title: String,

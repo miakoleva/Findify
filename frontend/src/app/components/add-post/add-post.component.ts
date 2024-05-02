@@ -3,13 +3,11 @@ import { MunicipalityService } from '../../services/municipality.service';
 import { Municipality } from '../../models/Municipality';
 import { NgFor } from '@angular/common';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { PostDTO } from '../../models/PostDTO';
 import { PostService } from '../../services/post.service';
 import { Router, RouterLink } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { HomeComponent } from '../home/home.component';
 import { Category } from '../../models/Category';
-import { PostStatus } from '../../models/PostStatus';
 import { CategoryService } from '../../services/category.service';
 
 @Component({
@@ -28,7 +26,8 @@ export class AddPostComponent implements OnInit {
     private formBuilder: FormBuilder,
     private service: PostService,
     private router: Router,
-    private categoryService: CategoryService) { }
+    private categoryService: CategoryService
+  ) { }
 
 
   ngOnInit(): void {
@@ -58,11 +57,11 @@ export class AddPostComponent implements OnInit {
   
 
   onSubmit() {
-    const data = this.form.value
+  
     this.errorMessage = ''
 
     const lostOrFoundValue = this.form.get('lostorfound')!!.value;
-    const state = lostOrFoundValue ? "PENDING_LOST" : "PENDING_FOUND";
+    const state = lostOrFoundValue === "lost" ? "PENDING_LOST" : "PENDING_FOUND";
 
     if(this.form.invalid){
       console.log(this.form)

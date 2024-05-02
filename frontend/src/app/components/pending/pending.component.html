@@ -1,1 +1,34 @@
-<p>pending works!</p>
+<!-- <app-nav-bar></app-nav-bar> -->
+<div class="container">
+    <div class="row">
+        @for(post of posts; track post.id) {
+        <div class="col-md-4" style="width: 18rem;">
+            <div class="card mb-4">
+                <img class="card-img-top" src="../../../assets/lost-item.jpg" alt="Lost item">
+                <div class="card-body">
+                    <h5 class="card-title">{{post.title}}</h5>
+                    <p class="card-text">{{post.description}}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a class="btn btn-primary btn-custom" [routerLink]="['/posts', post.id]">Details</a>
+                        <!-- <app-post-details-modal></app-post-details-modal> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</div>
+@if(posts.length === 0) {
+    <section class="bg-light text-center py-5" id="sec-27b9">
+        <div class="container position-relative">
+            <div class="row justify-content-center align-items-center">
+                <div class="col">
+                    <img class="img-fluid" src="../../../assets/home-page.png" id="background-image" alt="Findify">
+                    <div class="position-absolute top-50 start-50 translate-middle">
+                        <h1 class="display-4 text-center">There are no posts for review!</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}

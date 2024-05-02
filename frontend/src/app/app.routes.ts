@@ -17,8 +17,9 @@ export const routes: Routes = [
     { path: 'lost-items', component: LostItemsComponent },
     { path: 'found-items', component: FoundItemsComponent },
     { path: 'add-post', component: AddPostComponent},
-    { path: 'pending', component: PendingComponent},
+    { path: 'pending-posts', component: PendingComponent},
     { path: 'your-posts', component: YourPostsComponent },
-    {path: 'post-details', component:PostDetailsModalComponent},
+    // {path: 'post-details', component:PostDetailsModalComponent},
+    { path: 'posts/:id', component: PostDetailsModalComponent},
     { path: '**', redirectTo: 'home' }
 ];

@@ -11,7 +11,7 @@ export class UserService {
 
   url = 'http://localhost:8080/api/user'
 
-  constructor(private http: HttpClient) { }
+  constructor() { }
 
   currentUser: User | undefined
 

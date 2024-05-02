@@ -2,10 +2,18 @@ package com.sorsix.finalproject.backend.repository
 
 import com.sorsix.finalproject.backend.domain.Post
 import com.sorsix.finalproject.backend.domain.PostStatus
+import jakarta.transaction.Transactional
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Modifying
+import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 
 @Repository
 interface PostRepository: JpaRepository<Post, Long> {
     fun findByState(status: PostStatus): List<Post>
+    @Transactional
+    @Modifying
+    @Query("UPDATE Post p SET p.state = :state WHERE p.id = :id")
+    fun updateStateById(id: Long, state: PostStatus): Int
+    override fun deleteById(id: Long)
 }
