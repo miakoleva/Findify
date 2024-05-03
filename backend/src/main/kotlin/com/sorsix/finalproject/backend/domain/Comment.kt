@@ -12,10 +12,10 @@ data class Comment(
     @Column
     val comment: String = "",
     @ManyToOne
-    @JoinColumn(name = "post")
+    @JoinColumn(name = "post_id")
     val post: Post = Post(),
     @ManyToOne
-    @JoinColumn(name = "user")
+    @JoinColumn(name = "user_id")
     val user: User = User()
 )
 
