@@ -1,9 +1,9 @@
-<div class="form card">
+<div class="card">
     <div class="card-body modal-content">
         <div class="modal-header">
             <h5 class="modal-title text-uppercase">Filter</h5>
         </div>
-        <form>
+        <form [formGroup]="form" (ngSubmit)="onSubmitFilter()">
             <div class="mb-3">
                 <label for="itemTitle" class="form-label">Title</label>
                 <input type="text" class="form-control" id="itemTitle" placeholder="Name" formControlName="title">

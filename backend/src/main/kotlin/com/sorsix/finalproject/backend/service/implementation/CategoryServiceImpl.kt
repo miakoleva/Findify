@@ -10,5 +10,5 @@ class CategoryServiceImpl(private val categoryRepo: CategoryRepository): Categor
 
     override fun listAll(): List<Category> = this.categoryRepo.findAll()
 
-    override fun findCategoryByName(name: String): Category = this.categoryRepo.findByCategoryName(name)
+    override fun findCategoryByName(name: String): Category? = this.categoryRepo.findByCategoryName(name)
 }

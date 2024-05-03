@@ -1,5 +1,7 @@
 package com.sorsix.finalproject.backend.repository
 
+import com.sorsix.finalproject.backend.domain.Category
+import com.sorsix.finalproject.backend.domain.Municipality
 import com.sorsix.finalproject.backend.domain.Post
 import com.sorsix.finalproject.backend.domain.PostStatus
 import jakarta.transaction.Transactional
@@ -16,4 +18,6 @@ interface PostRepository: JpaRepository<Post, Long> {
     @Query("UPDATE Post p SET p.state = :state WHERE p.id = :id")
     fun updateStateById(id: Long, state: PostStatus): Int
     override fun deleteById(id: Long)
+
+    fun findAllByTitleContainingAndCategoryOrCategoryNullAndMunicipalityOrMunicipalityNull(title: String, category: Category?, municipality: Municipality?): List<Post>
 }

@@ -33,16 +33,6 @@ class PostServiceImpl(private val postRepository: PostRepository, private val us
         val user = userService.findByEmail(email)
         val byteArr = image.bytes
 
-//        val post = Post(
-//            id = 1L,
-//            state = status,
-//            title = title,
-//            image = byteArr,
-//            user = user!!,
-//            municipality = municipality,
-//            category = category,
-//            description = description
-//        )
         return this.postRepository.save(Post(
             id = 1L,
             state = status,
@@ -54,6 +44,14 @@ class PostServiceImpl(private val postRepository: PostRepository, private val us
             description = description
         ))
 
+    }
+
+    override fun filter(title: String, category: Category?, municipality: Municipality?): List<Post> {
+        return this.postRepository.findAllByTitleContainingAndCategoryOrCategoryNullAndMunicipalityOrMunicipalityNull(
+            title = title,
+            category = category,
+            municipality = municipality
+        )
     }
 
 }

@@ -5,5 +5,5 @@ import com.sorsix.finalproject.backend.domain.Category
 interface CategoryService {
 
     fun listAll(): List<Category>
-    fun findCategoryByName(name: String): Category
+    fun findCategoryByName(name: String): Category?
 }

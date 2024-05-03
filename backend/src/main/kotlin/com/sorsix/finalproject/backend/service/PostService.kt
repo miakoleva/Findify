@@ -10,4 +10,6 @@ interface PostService {
     fun updateState(id: Long, newState: PostStatus): Post?
     fun deleteById(id: Long)
     fun create(title: String, category: Category, description: String, municipality: Municipality, image: MultipartFile, status: PostStatus): Post
+
+    fun filter(title: String, category: Category?, municipality: Municipality?): List<Post>
 }

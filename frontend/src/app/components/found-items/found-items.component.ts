@@ -4,13 +4,14 @@ import { PostDetailsModalComponent } from '../post-details-modal/post-details-mo
 import { PostService } from '../../services/post.service';
 import { Post } from '../../models/Post';
 import { RouterLink } from '@angular/router';
+import { FilterSectionComponent } from "../filter-section/filter-section.component";
 
 @Component({
-  selector: 'app-found-items',
-  standalone: true,
-  imports: [NavBarComponent, PostDetailsModalComponent, RouterLink],
-  templateUrl: './found-items.component.html',
-  styleUrl: './found-items.component.scss'
+    selector: 'app-found-items',
+    standalone: true,
+    templateUrl: './found-items.component.html',
+    styleUrl: './found-items.component.scss',
+    imports: [NavBarComponent, PostDetailsModalComponent, RouterLink, FilterSectionComponent]
 })
 export class FoundItemsComponent implements OnInit {
   constructor(private postService: PostService) { }

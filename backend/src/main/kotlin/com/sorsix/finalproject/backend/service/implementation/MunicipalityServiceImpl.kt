@@ -11,5 +11,5 @@ class MunicipalityServiceImpl(private val municipalityRepo: MunicipalityReposito
         return municipalityRepo.findAll()
     }
 
-    override fun findMunicipalityByName(name: String): Municipality = this.municipalityRepo.findByName(name)
+    override fun findMunicipalityByName(name: String): Municipality? = this.municipalityRepo.findByName(name)
 }

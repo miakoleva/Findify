@@ -81,9 +81,25 @@ class PostController(
         val s: PostStatus = PostStatus.valueOf(state)
 
 
-        val post = postService.create(title, cat, description, mun, image, s)
+        val post = postService.create(title, cat!!, description, mun!!, image, s)
 
         return ResponseEntity.ok().body(post)
+    }
+
+    @PostMapping("/filter")
+    fun filterPosts(
+        @RequestParam(required = false) title: String,
+        @RequestParam(required = false) category: String,
+        @RequestParam(required = false) municipality: String
+    ): ResponseEntity<List<Post>> {
+
+        val cat = categoryService.findCategoryByName(category)
+        val mun = municipalityService.findMunicipalityByName(municipality)
+
+        val posts: List<Post> = postService.filter(title, cat, mun)
+
+        return ResponseEntity.ok().body(posts)
+
     }
 
 }
