@@ -1,20 +1,44 @@
 <app-nav-bar></app-nav-bar>
 <div class="container-fluid" style="margin-top: 10px;">
     <div class="row">
-        <div class="col-md-2 pe-0">
-            <div class="p-0">
-                <app-filter-section></app-filter-section>
-            </div>
+        <!-- Left side: Filtering Form -->
+        <div class="col-md-2 card">
+            <form [formGroup]="form" (ngSubmit)="onSubmitFilter()" class="card-body modal-content">
+                <div class="mb-3">
+                    <label for="title">Title:</label>
+                    <input type="text" class="form-control" id="title" formControlName="title">
+                </div>
+                <div class="mb-3">
+                    <label for="category">Category:</label>
+                    <select class="form-control" id="category" formControlName="category">
+                        <option selected>All</option>
+                        @for(c of categories; track c.id){
+                            <option>{{c.categoryName}}</option>
+                            }
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="municipality">Municipality:</label>
+                    <select class="form-control" id="municipality" formControlName="municipality">
+                        <option selected>All</option>
+                        @for(m of municipalities; track m.id) {
+                            <option>{{m.name}}</option>
+                            }
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Filter</button>
+            </form>
         </div>
+        <!-- Right side: Displaying Lost Items -->
         <div class="col-md-10">
             <div class="row" style="margin-left: 50px;">
-                <div class="col-md-4" *ngFor="let post of posts" style="width: 18rem;">
+                <div class="col-md-4" *ngFor="let post of (filter ? filtered : posts)" style="width: 18rem;">
                     <div class="card mb-4">
                         <img class="card-img-top" src="../../../assets/lost-item.jpg" alt="Lost item">
                         <div class="card-body">
                             <h5 class="card-title">{{ post.title }}</h5>
                             <p class="card-text">{{ post.description }}</p>
-                            <button class="btn btn-primary" (click)="openDetailsDialog(post)">Details</button>
+                            <button class="btn btn-primary" [routerLink]="['/posts', post.id]">Details</button>
                         </div>
                     </div>
                 </div>

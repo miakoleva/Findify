@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Post } from '../../models/Post';
 import { catchError, filter, map, mergeMap, of, tap } from 'rxjs';
@@ -6,6 +6,7 @@ import { PostService } from '../../services/post.service';
 import { User } from '../../models/User';
 import { Location } from '@angular/common';
 import { MapComponent } from '../map/map.component';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-post-details-modal',

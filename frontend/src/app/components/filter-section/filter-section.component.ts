@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { HomeComponent } from '../home/home.component';
-import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CategoryService } from '../../services/category.service';
 import { MunicipalityService } from '../../services/municipality.service';
 import { PostService } from '../../services/post.service';
@@ -17,25 +17,27 @@ import { Post } from '../../models/Post';
   templateUrl: './filter-section.component.html',
   styleUrl: './filter-section.component.scss'
 })
-export class FilterSectionComponent implements OnInit{
+export class FilterSectionComponent{
 
   errorMessage: string = ''
   form!: FormGroup
   posts: Post[] = []
+ 
 
   constructor(private municipalityService: MunicipalityService,
     private formBuilder: FormBuilder,
     private service: FilterService,
     private router: Router,
-    private categoryService: CategoryService) { }
+    private categoryService: CategoryService,
+    private route: ActivatedRoute) { }
 
   get f(): { [key: string]: AbstractControl } {
-    return this.form.controls;
-  }
+     return this.form.controls;
+   }
 
-  ngOnInit(): void {
-    this.getMunicipalities()
-    this.getCategories()
+   ngOnInit(): void {
+     this.getMunicipalities()
+     this.getCategories()
 
     this.form = this.formBuilder.group({
       title: '',

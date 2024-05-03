@@ -34,7 +34,10 @@ class JwtAuthenticationFilter(private val authenticationManager: AuthenticationM
                 request.servletPath.equals("/api/register") ||
                 request.servletPath.equals("/api/home") ||
                 request.servletPath.equals("/api/municipalities") ||
-                request.servletPath.equals("/api/user/get")
+                request.servletPath.equals("/api/user/get") ||
+                request.servletPath.equals("/api/lost-items") ||
+                request.servletPath.equals("/api/found-items") ||
+                request.servletPath.equals("/api/categories")
     }
 
 }

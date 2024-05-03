@@ -8,32 +8,84 @@ import { FilterSectionComponent } from '../filter-section/filter-section.compone
 import { MatDialog } from '@angular/material/dialog';
 import { PostDetailsDialogComponent } from '../post-details-dialog/post-details-dialog.component';
 import { NgFor } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Category } from '../../models/Category';
+import { Municipality } from '../../models/Municipality';
+import { MunicipalityService } from '../../services/municipality.service';
+import { CategoryService } from '../../services/category.service';
+import { FilterService } from '../../services/filter.service';
 
 @Component({
   selector: 'app-lost-items',
   standalone: true,
-  imports: [NavBarComponent, PostDetailsModalComponent, RouterLink, FilterSectionComponent, NgFor],
+  imports: [NavBarComponent, PostDetailsModalComponent, RouterLink, FilterSectionComponent, NgFor, ReactiveFormsModule],
   templateUrl: './lost-items.component.html',
   styleUrl: './lost-items.component.scss'
 })
 export class LostItemsComponent {
-  constructor(private postService: PostService, private dialog: MatDialog) { }
-  posts: Post[] = []
+  constructor(
+    private postService: PostService,
+    private dialog: MatDialog,
+    private municipalityService: MunicipalityService,
+    private categoryService: CategoryService,
+    private formBuilder: FormBuilder,
+    private filterService: FilterService
+  ) { }
+
+  posts: Post[] = [];
+  filtered: Post[] = [];
+  
+  form!: FormGroup;
+  filter = false;
 
   ngOnInit(): void {
-    this.postService.getLostItems().subscribe((it) => {
-      this.posts = it
+    this.getMunicipalities();
+    this.getCategories();
+
+    this.form = this.formBuilder.group({
+      title: '',
+      category: '',
+      municipality: ''
+    });
+    this.getLostItems();
+  }
+
+  onSubmitFilter(): void {
+    this.filter = true;
+    if (this.form.invalid) {
+      console.log("Form is invalid");
+      return;
+    }
+  
+    const formData = new FormData();
+    formData.append("title", this.form.get('title')?.value || '');
+    formData.append("category", this.form.get('category')?.value || '');
+    formData.append("municipality", this.form.get('municipality')?.value || '');
+  
+    this.filterService.filterPosts(formData).subscribe((filteredPosts) => {
+      this.filtered = filteredPosts;
+    });
+  }
+  
+  municipalities: Municipality[] = []
+
+  getMunicipalities() {
+    this.municipalityService.getMunicipalities().subscribe((it) => {
+      this.municipalities = it;
+    });
+  }
+
+  categories: Category[] = []
+
+  getCategories() {
+    this.categoryService.getCategories().subscribe((it) => {
+      this.categories = it;
     })
   }
-
-  openDetailsDialog(post: any): void {
-    const dialogRef = this.dialog.open(PostDetailsDialogComponent, {
-      width: '600px',
-      data: { post }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+  getLostItems(): void {
+    this.postService.getLostItems().subscribe((lostItems) => {
+      this.posts = lostItems;
     });
   }
+
 }

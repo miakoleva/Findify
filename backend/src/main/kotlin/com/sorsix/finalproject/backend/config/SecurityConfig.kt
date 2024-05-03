@@ -41,6 +41,10 @@ class SecurityConfig(private val customAuthenticationProvider: CustomAuthenticat
                     .requestMatchers(HttpMethod.GET, "/api/municipalities").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/user/get").permitAll()
                     .requestMatchers(HttpMethod.POST, "/api/new-post").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/lost-items").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/found-items").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/categories").permitAll()
+
                     .requestMatchers("/api/**").authenticated()
                     .anyRequest().permitAll()
             }

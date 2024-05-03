@@ -20,4 +20,6 @@ interface PostRepository: JpaRepository<Post, Long> {
     override fun deleteById(id: Long)
 
     fun findAllByTitleContainingAndCategoryOrCategoryNullAndMunicipalityOrMunicipalityNull(title: String, category: Category?, municipality: Municipality?): List<Post>
+
+    fun findPostsByTitleContainingAndCategoryOrCategoryNullAndMunicipalityOrMunicipalityNull(title: String, category: Category?, municipality: Municipality?): List<Post>
 }

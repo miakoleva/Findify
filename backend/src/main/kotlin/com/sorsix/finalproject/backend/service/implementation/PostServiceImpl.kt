@@ -47,6 +47,7 @@ class PostServiceImpl(private val postRepository: PostRepository, private val us
     }
 
     override fun filter(title: String, category: Category?, municipality: Municipality?): List<Post> {
+
         return this.postRepository.findAllByTitleContainingAndCategoryOrCategoryNullAndMunicipalityOrMunicipalityNull(
             title = title,
             category = category,

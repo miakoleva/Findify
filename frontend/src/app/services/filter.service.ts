@@ -10,17 +10,20 @@ export class FilterService {
 
   url = 'http://localhost:8080/api'
 
-  // private filteredPostsSubject: BehaviorSubject<Post[]> = new BehaviorSubject<Post[]>([]);
-  // filteredPosts$: Observable<Post[]> = this.filteredPostsSubject.asObservable();
+
 
   constructor(private http: HttpClient) { }
 
-  filterPosts(formData: FormData): Observable<Post[]>{
-    console.log("eve")
-    return this.http.post<Post[]>(`${this.url}/filter`, formData)
+  filterPosts(formData: FormData): Observable<Post[]> {
+    console.log("eve");
+    const options = {
+      params: {
+        title: formData.get('title') as string,
+        category: formData.get('category') as string,
+        municipality: formData.get('municipality') as string
+      }
+    };
+    return this.http.post<Post[]>(`${this.url}/filter`, null, options);
   }
 
-  // setFilteredPosts(posts: Post[]): void {
-  //   this.filteredPostsSubject.next(posts);
-  // }
 }
