@@ -18,6 +18,7 @@
                             <div>
                                 <h5 class="card-title">{{post?.title}}</h5>
                                 <p class="card-text">{{post?.description}}</p>
+
                             </div>
                             @if(currentUser!!.role === "ROLE_ADMIN"){
                             <div>
@@ -46,6 +47,11 @@
                                 <li class="list-group-item">Comment 3</li>
                             </ul>
                         </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="card-body">
+                        <app-map></app-map>
                     </div>
                 </div>
             </div>
