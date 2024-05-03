@@ -8,15 +8,15 @@ data class Comment(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    val id: Long,
+    val id: Long = 1L,
     @Column
-    val comment: String,
+    val comment: String = "",
     @ManyToOne
-    @JoinColumn(name = "post_id")
-    val post: Post,
+    @JoinColumn(name = "post")
+    val post: Post = Post(),
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    val user: User
+    @JoinColumn(name = "user")
+    val user: User = User()
 )
 
 

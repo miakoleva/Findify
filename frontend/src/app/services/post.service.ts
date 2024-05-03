@@ -31,7 +31,7 @@ export class PostService {
   }
 
   getPostsByUserId(id: number): Observable<Post[]> {
-    return this.http.get<Post[]>(`${this.url}/posts/users/${id}`)
+    return this.http.get<Post[]>(`${this.url}/posts/user/${id}`)
   }
 
   approvePost(post: Post): Observable<Post> {

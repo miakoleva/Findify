@@ -1,7 +1,4 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { GetUserResponse } from '../models/GetUserResponse';
-import { Observable } from 'rxjs';
 import { User } from '../models/User';
 
 @Injectable({
