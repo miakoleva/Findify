@@ -18,6 +18,10 @@ class UserServiceImpl(
 
     override fun existsByEmail(email: String): Boolean = userRepo.existsByEmail(email)
 
+    override fun listUsers(): List<User> = userRepo.findAll()
+
+    override fun deleteById(id: Long) = userRepo.deleteById(id)
+
     override fun registerUser(
         firstName: String,
         lastName: String,

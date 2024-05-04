@@ -12,5 +12,8 @@ interface UserService {
 
     fun registerUser(firstName: String,lastName: String, email: String,  password: String, phoneNumber: String): User
 
+    fun listUsers(): List<User>
+
+    fun deleteById(id: Long)
 
 }

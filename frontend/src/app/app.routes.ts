@@ -8,6 +8,7 @@ import { AddPostComponent } from './components/add-post/add-post.component';
 import { PendingComponent } from './components/pending/pending.component';
 import { YourPostsComponent } from './components/your-posts/your-posts.component';
 import { PostDetailsModalComponent } from './components/post-details-modal/post-details-modal.component';
+import { UserManagementComponent } from './components/user-management/user-management.component';
 
 
 export const routes: Routes = [
@@ -21,5 +22,6 @@ export const routes: Routes = [
     { path: 'your-posts', component: YourPostsComponent },
     // {path: 'post-details', component:PostDetailsModalComponent},
     { path: 'posts/:id', component: PostDetailsModalComponent},
+    { path: 'user-management', component: UserManagementComponent},
     { path: '**', redirectTo: 'home' }
 ];
