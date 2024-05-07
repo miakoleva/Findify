@@ -8,11 +8,13 @@ import { AuthService } from '../../services/auth.service';
 import { AuthenticationRequest } from '../../models/AuthenticationRequest';
 import { User } from '../../models/User';
 import { UserService } from '../../services/user.service';
+import { NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterLink, RegisterComponent, HomeComponent, NavBarComponent, ReactiveFormsModule],
+  imports: [RouterLink, RegisterComponent, HomeComponent, NavBarComponent, ReactiveFormsModule, NgIf, CommonModule],
   templateUrl: './login-modal.component.html',
   styleUrl: './login-modal.component.scss'
 })
@@ -29,7 +31,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      email: ['', Validators.required],
+      email: ['', [
+        Validators.required,
+        Validators.email
+      ]],
       password: ['', Validators.required]
     });
   }

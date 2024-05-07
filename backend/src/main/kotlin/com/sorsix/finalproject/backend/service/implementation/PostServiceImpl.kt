@@ -46,13 +46,30 @@ class PostServiceImpl(private val postRepository: PostRepository, private val us
 
     }
 
-    override fun filter(title: String, category: Category?, municipality: Municipality?): List<Post> {
+    override fun filter(title: String, category: Category?, municipality: Municipality?, status: PostStatus): List<Post> {
 
-        return this.postRepository.findAllByTitleContainingAndCategoryOrCategoryNullAndMunicipalityOrMunicipalityNull(
-            title = title,
-            category = category,
-            municipality = municipality
-        )
+        val posts = mutableListOf<Post>()
+
+        if(title!=""){
+            if(this.postRepository.findAllByTitleContainingIgnoreCaseAndState(title, status).isNotEmpty()) {
+                posts.addAll(this.postRepository.findAllByTitleContainingIgnoreCaseAndState(title, status))
+            }
+        }
+        if(category != null){
+            if(this.postRepository.findAllByCategoryAndState(category, status).isNotEmpty()) {
+                posts.addAll(this.postRepository.findAllByCategoryAndState(category, status))
+            }
+        }
+        if(municipality != null){
+            if(this.postRepository.findAllByMunicipalityAndState(municipality, status).isNotEmpty()) {
+                posts.addAll(this.postRepository.findAllByMunicipalityAndState(municipality, status))
+            }
+        }
+        if(posts.size > 1){
+            return posts.distinct()
+        }
+
+        return posts
     }
 
 }

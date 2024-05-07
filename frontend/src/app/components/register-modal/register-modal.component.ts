@@ -1,16 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-
-import { AbstractControl, FormBuilder, FormGroup, FormsModule, NgModel, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, FormsModule,  ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { UserDTO } from '../../models/UserDTO';
 import { HomeComponent } from '../home/home.component';
+import { NgIf } from '@angular/common';
+import {CommonModule} from '@angular/common';
+import { PhoneDirective } from '../../directives/phone.directive';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, RouterLink, HomeComponent],
+  imports: [FormsModule, ReactiveFormsModule, RouterLink, HomeComponent, NgIf, CommonModule, PhoneDirective],
   templateUrl: './register-modal.component.html',
   styleUrl: './register-modal.component.scss'
 })
@@ -33,7 +35,11 @@ export class RegisterComponent implements OnInit {
         Validators.minLength(6),
         Validators.maxLength(40)
       ]],
-      phoneNumber: ['', Validators.required],
+      phoneNumber: ['',  [
+        Validators.required,
+        Validators.minLength(11),
+        Validators.maxLength(11)
+      ]],
       email: ['', [Validators.required, Validators.email]]
     });
   }

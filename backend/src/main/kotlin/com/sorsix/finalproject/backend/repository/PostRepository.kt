@@ -18,8 +18,9 @@ interface PostRepository: JpaRepository<Post, Long> {
     @Query("UPDATE Post p SET p.state = :state WHERE p.id = :id")
     fun updateStateById(id: Long, state: PostStatus): Int
     override fun deleteById(id: Long)
+    fun findAllByTitleContainingIgnoreCaseAndState(title: String, state: PostStatus): List<Post>
 
-    fun findAllByTitleContainingAndCategoryOrCategoryNullAndMunicipalityOrMunicipalityNull(title: String, category: Category?, municipality: Municipality?): List<Post>
+    fun findAllByCategoryAndState(category: Category, state: PostStatus): List<Post>
+    fun findAllByMunicipalityAndState(municipality: Municipality, state: PostStatus): List<Post>
 
-    fun findPostsByTitleContainingAndCategoryOrCategoryNullAndMunicipalityOrMunicipalityNull(title: String, category: Category?, municipality: Municipality?): List<Post>
 }

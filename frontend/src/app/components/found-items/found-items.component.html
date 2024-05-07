@@ -1,25 +1,57 @@
-<!-- <app-nav-bar></app-nav-bar> -->
-<div class="container-fluid" style="margin-top: 10px;">
+<app-nav-bar></app-nav-bar>
+<div class="container-fluid" id="postModal" style="margin-top: 10px;">
     <div class="row">
-        <div class="col-md-2 pe-0">
-            <div class="p-0">
-                <app-filter-section></app-filter-section>
-            </div>
+        <!-- Left side: Filtering Form -->
+        <div class="col-md-2 card">
+            <form [formGroup]="form" (ngSubmit)="onSubmitFilter()" class="card-body modal-content">
+                <div class="mb-3">
+                    <label for="title">Title:</label>
+                    <input type="text" class="form-control" id="title" formControlName="title">
+                </div>
+                <div class="mb-3">
+                    <label for="category">Category:</label>
+                    <select class="form-control" id="category" formControlName="category">
+                        <option selected>All</option>
+                        @for(c of categories; track c.id){
+                            <option>{{c.categoryName}}</option>
+                            }
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="municipality">Municipality:</label>
+                    <select class="form-control" id="municipality" formControlName="municipality">
+                        <option selected>All</option>
+                        @for(m of municipalities; track m.id) {
+                            <option>{{m.name}}</option>
+                            }
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Filter</button>
+            </form>
         </div>
         <div class="col-md-10">
-            <div class="row" style="margin-left: 50px;">
-                @for(post of posts; track post.id){
-                <div class="col-md-4" style="width: 18rem;">
-                    <div class="card mb-4">
-                        <img class="card-img-top" src="../../../assets/lost-item.jpg" alt="Lost item">
-                        <div class="card-body">
-                            <h5 class="card-title">{{post.title}}</h5>
-                            <p class="card-text">{{post.description}}</p>
-                            <a [routerLink]="['/posts', post.id]" class="btn btn-primary">Details</a>
+            <div class="modal-overlay" *ngIf="filter && filtered.length === 0">
+                <div class="modal-container">
+                    <div class="modal-content fade-in">
+                        <div class="modal-body">
+                            <h5 class="text-uppercase">We're sorry!</h5>
+                            <p>No posts match the selected criteria.</p>
+                            <button type="button" class="btn btn-secondary" (click)="reloadPage()">Back</button>
                         </div>
                     </div>
                 </div>
-                }
+            </div>
+            <div class="row" style="margin-left: 50px;">
+                <div class="col-md-4" *ngFor="let post of (filter ? filtered : posts)" style="width: 18rem;">
+                    <div class="card mb-4">
+                        <img class="card-img-top" src="../../../assets/lost-item.jpg" alt="Lost item">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ post.title }}</h5>
+                            <p class="card-text">{{ post.description }}</p>
+                            <button class="btn btn-primary" [routerLink]="['/posts', post.id]">Details</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

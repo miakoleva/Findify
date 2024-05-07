@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { PostDetailsModalComponent } from '../post-details-modal/post-details-modal.component';
 import { PostService } from '../../services/post.service';
@@ -7,7 +7,7 @@ import { RouterLink } from '@angular/router';
 import { FilterSectionComponent } from '../filter-section/filter-section.component';
 import { MatDialog } from '@angular/material/dialog';
 import { PostDetailsDialogComponent } from '../post-details-dialog/post-details-dialog.component';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Category } from '../../models/Category';
 import { Municipality } from '../../models/Municipality';
@@ -18,14 +18,13 @@ import { FilterService } from '../../services/filter.service';
 @Component({
   selector: 'app-lost-items',
   standalone: true,
-  imports: [NavBarComponent, PostDetailsModalComponent, RouterLink, FilterSectionComponent, NgFor, ReactiveFormsModule],
+  imports: [NavBarComponent, PostDetailsModalComponent, RouterLink, FilterSectionComponent, NgFor, ReactiveFormsModule, NgIf],
   templateUrl: './lost-items.component.html',
   styleUrl: './lost-items.component.scss'
 })
 export class LostItemsComponent {
   constructor(
     private postService: PostService,
-    private dialog: MatDialog,
     private municipalityService: MunicipalityService,
     private categoryService: CategoryService,
     private formBuilder: FormBuilder,
@@ -50,6 +49,7 @@ export class LostItemsComponent {
     this.getLostItems();
   }
 
+
   onSubmitFilter(): void {
     this.filter = true;
     if (this.form.invalid) {
@@ -61,6 +61,7 @@ export class LostItemsComponent {
     formData.append("title", this.form.get('title')?.value || '');
     formData.append("category", this.form.get('category')?.value || '');
     formData.append("municipality", this.form.get('municipality')?.value || '');
+    formData.append("state", "ACTIVE_LOST")
   
     this.filterService.filterPosts(formData).subscribe((filteredPosts) => {
       this.filtered = filteredPosts;
@@ -86,6 +87,10 @@ export class LostItemsComponent {
     this.postService.getLostItems().subscribe((lostItems) => {
       this.posts = lostItems;
     });
+  }
+
+  reloadPage() {
+    window.location.reload();
   }
 
 }

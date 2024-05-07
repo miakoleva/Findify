@@ -1,7 +1,6 @@
 <app-nav-bar></app-nav-bar>
 <div class="container-fluid" id="postModal" style="margin-top: 10px;">
     <div class="row">
-        <!-- Left side: Filtering Form -->
         <div class="col-md-2 card">
             <form [formGroup]="form" (ngSubmit)="onSubmitFilter()" class="card-body modal-content">
                 <div class="mb-3">
@@ -13,8 +12,8 @@
                     <select class="form-control" id="category" formControlName="category">
                         <option selected>All</option>
                         @for(c of categories; track c.id){
-                            <option>{{c.categoryName}}</option>
-                            }
+                        <option>{{c.categoryName}}</option>
+                        }
                     </select>
                 </div>
                 <div class="mb-3">
@@ -22,15 +21,25 @@
                     <select class="form-control" id="municipality" formControlName="municipality">
                         <option selected>All</option>
                         @for(m of municipalities; track m.id) {
-                            <option>{{m.name}}</option>
-                            }
+                        <option>{{m.name}}</option>
+                        }
                     </select>
                 </div>
                 <button type="submit" class="btn btn-primary">Filter</button>
             </form>
         </div>
-        <!-- Right side: Displaying Lost Items -->
         <div class="col-md-10">
+            <div class="modal-overlay" *ngIf="filter && filtered.length === 0">
+                <div class="modal-container">
+                    <div class="modal-content fade-in">
+                        <div class="modal-body">
+                            <h5 class="text-uppercase">We're sorry!</h5>
+                            <p>No posts match the selected criteria.</p>
+                            <button type="button" class="btn btn-secondary" (click)="reloadPage()">Back</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row" style="margin-left: 50px;">
                 <div class="col-md-4" *ngFor="let post of (filter ? filtered : posts)" style="width: 18rem;">
                     <div class="card mb-4">

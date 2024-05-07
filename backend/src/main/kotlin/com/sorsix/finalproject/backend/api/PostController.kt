@@ -90,13 +90,18 @@ class PostController(
     fun filterPosts(
         @RequestParam(required = false) title: String,
         @RequestParam(required = false) category: String,
-        @RequestParam(required = false) municipality: String
+        @RequestParam(required = false) municipality: String,
+        @RequestParam(required = true) state: String
     ): ResponseEntity<List<Post>> {
 
         val cat = categoryService.findCategoryByName(category)
         val mun = municipalityService.findMunicipalityByName(municipality)
+        val s: PostStatus = if(state == "ACTIVE_LOST")
+            PostStatus.ACTIVE_LOST
+        else
+            PostStatus.ACTIVE_FOUND
 
-        val posts: List<Post> = postService.filter(title, cat, mun)
+        val posts: List<Post> = postService.filter(title, cat, mun, s)
 
         return ResponseEntity.ok().body(posts)
 
