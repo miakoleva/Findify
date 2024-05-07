@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../models/User';
 import { UserService } from '../../services/user.service';
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-user-management',
   standalone: true,
-  imports: [],
+  imports: [NgFor],
   templateUrl: './user-management.component.html',
   styleUrl: './user-management.component.scss'
 })

@@ -59,11 +59,15 @@ export class LoginComponent implements OnInit {
       next: (response: any) => {
         console.log("User is logged in")
 
-        const loggedInUser: User | undefined = response.user; // Extract user object if available
+        const loggedInUser: User | undefined = response.user;
           if (loggedInUser) {
-            // User object exists, store it in the user service or local storage
             this.userSerivce.setCurrentUser(loggedInUser);
+            this.auth.setCurrentUser(loggedInUser)
+            this.auth.updateLoginStatus(true)
+
             localStorage.setItem("jwtToken", response.token)
+            localStorage.setItem("user", JSON.stringify(loggedInUser))
+
             console.log(response.token)
             console.log(loggedInUser);
           }

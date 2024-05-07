@@ -22,7 +22,7 @@ export class NavBarComponent implements OnInit {
   currentUser: User | undefined
 
   constructor(private authService: AuthService, private router: Router, private userService: UserService) {
-    this.currentUser = JSON.parse(localStorage.getItem('user')!!)
+     this.currentUser = JSON.parse(localStorage.getItem('user')!!)
    }
 
   ngOnInit() {
@@ -31,13 +31,20 @@ export class NavBarComponent implements OnInit {
     this.authService.getLoginStatus().subscribe((isLoggedIn) => {
       this.loggedIn = isLoggedIn;
     });
+
+    this.authService.getCurrentUser().subscribe((user) => {
+      this.currentUser = user;
+    })
+
   }
 
   logOut() {
     console.log('logging out')
-    localStorage.removeItem('jwtToken')
-    localStorage.removeItem('user')
+    // localStorage.removeItem('jwtToken')
+    // localStorage.removeItem('user')
+
     this.authService.updateLoginStatus(false);
+
     this.router.navigate(['/home']);
 
     this.authService.logout()

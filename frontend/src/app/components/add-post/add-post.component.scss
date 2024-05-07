@@ -1,6 +1,7 @@
 .btn {
     background-color: #2abbca;
     border-color: #2abbca;
+    margin-top: 10px;
 }
 
 input[type="radio"].form-check-input:checked {
@@ -17,11 +18,6 @@ input[type="radio"].form-check-input:checked {
     z-index: 1050;
     overflow-x: hidden;
     overflow-y: auto;
-}
-.btn {
-    margin-top: 10px;
-    background-color: #2abbca;
-    border-color: #2abbca;
 }
 
 .card {

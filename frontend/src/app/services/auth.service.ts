@@ -5,6 +5,7 @@ import { AuthenticationRequest } from '../models/AuthenticationRequest';
 import { AuthenticationResponse } from '../models/AuthenticationResponse';
 import { Observable, Subject, catchError, tap, throwError } from 'rxjs';
 import moment from 'moment';
+import { User } from '../models/User';
 
 
 @Injectable({
@@ -14,6 +15,7 @@ export class AuthService {
 
   url = 'http://localhost:8080/api'
   private loginStatusSubject: Subject<boolean> = new Subject<boolean>();
+  private currentUserSubject: Subject<User> = new Subject<User>();
 
   constructor(private http: HttpClient) { }
 
@@ -32,6 +34,7 @@ export class AuthService {
   logout() {
     localStorage.removeItem("jwtToken")
     localStorage.removeItem("expires_at")
+    localStorage.removeItem("user")
   }
 
   isLoggedIn() {
@@ -69,6 +72,14 @@ export class AuthService {
       return moment(expiresAt);
     }
     return null
+  }
+
+  getCurrentUser(): Observable<User | undefined> {
+    return this.currentUserSubject.asObservable()
+  }
+
+  setCurrentUser(user: User) {
+    this.currentUserSubject.next(user)
   }
 
 }

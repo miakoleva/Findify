@@ -13,3 +13,11 @@
     background-color: #2abbca;
     color: white;
 }
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1100;
+}

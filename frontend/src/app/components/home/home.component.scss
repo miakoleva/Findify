@@ -22,16 +22,19 @@ a {
 #buttons a:hover {
     color: black;
 }
+
 @keyframes grow {
     0% {
-      transform: scale(0.3);
+        transform: scale(0.3);
     }
+
     100% {
-      transform: scale(1);
+        transform: scale(1);
     }
-  }
-  
-  #background-image {
+}
+
+#background-image {
     animation: grow 2s ease-in-out;
-  }
-  
+    margin-top: 10px;
+    height: 89vh;
+}
