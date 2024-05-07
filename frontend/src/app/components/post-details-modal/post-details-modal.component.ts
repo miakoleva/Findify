@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { ActivatedRoute, Route, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Route, Router, RouterLink } from '@angular/router';
 import { Post } from '../../models/Post';
 import { catchError, filter, map, mergeMap, of, tap } from 'rxjs';
 import { PostService } from '../../services/post.service';
