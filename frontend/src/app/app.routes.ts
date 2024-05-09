@@ -9,6 +9,8 @@ import { PendingComponent } from './components/pending/pending.component';
 import { YourPostsComponent } from './components/your-posts/your-posts.component';
 import { PostDetailsModalComponent } from './components/post-details-modal/post-details-modal.component';
 import { UserManagementComponent } from './components/user-management/user-management.component';
+import { UpdateProfileComponent } from './components/update-profile/update-profile.component';
+import { MyProfileComponent } from './components/my-profile/my-profile.component';
 
 
 export const routes: Routes = [
@@ -23,5 +25,7 @@ export const routes: Routes = [
     // {path: 'post-details', component:PostDetailsModalComponent},
     { path: 'posts/:id', component: PostDetailsModalComponent},
     { path: 'user-management', component: UserManagementComponent},
+    { path: 'profile', component: MyProfileComponent},
+    { path: 'update-profile', component: UpdateProfileComponent},
     { path: '**', redirectTo: 'home' }
 ];

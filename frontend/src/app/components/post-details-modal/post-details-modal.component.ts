@@ -69,6 +69,7 @@ export class PostDetailsModalComponent implements OnInit {
       .subscribe({
         next: (post) => {
           this.post = post;
+          this.post!!.flag = false;
           this.loading = false;
           this.postService.getPostImage(post?.id!).subscribe((imageData) => {
             const imageUrl = URL.createObjectURL(new Blob([imageData]));
