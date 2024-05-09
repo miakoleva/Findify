@@ -21,6 +21,7 @@ class UserServiceImpl(
     override fun listUsers(): List<User> = userRepo.findAll()
 
     override fun deleteById(id: Long) = userRepo.deleteById(id)
+    override fun updateUserData(id: Long, firstName: String, lastName: String, phoneNumber: String, password: String) = userRepo.updateUserData(id, firstName, lastName, phoneNumber, password)
 
     override fun registerUser(
         firstName: String,

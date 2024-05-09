@@ -66,6 +66,7 @@ export class PostDetailsModalComponent implements OnInit {
       .subscribe({
         next: (post) => {
           this.post = post;
+          this.post!!.flag = false;
           this.loading = false;
         },
         error: (error) => {

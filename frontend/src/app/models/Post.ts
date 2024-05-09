@@ -12,4 +12,5 @@ export interface Post{
     municipality: Municipality;
     category: Category;
     comments: Comment[];
+    flag: boolean;
 }

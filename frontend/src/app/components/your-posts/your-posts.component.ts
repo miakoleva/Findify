@@ -20,7 +20,7 @@ export class YourPostsComponent implements OnInit {
 
   ngOnInit(): void {
     this.postService.getPostsByUserId(this.currentUser.id).subscribe(it => {
-      this.posts = it;
+      this.posts = it.filter(p => p.state.includes("ACTIVE"));
     })
   }
 

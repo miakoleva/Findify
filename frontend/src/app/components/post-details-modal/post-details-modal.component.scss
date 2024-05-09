@@ -4,7 +4,7 @@
 }
 
 .card {
-    margin: 80px auto auto auto;
+    margin: 80px auto 20px auto;
 }
 
 .comments-label {
@@ -26,4 +26,16 @@
 
 .comment-name {
     font-weight: bold;
+}
+
+.btn-mark {
+    border-color: #2abbca;
+    color: #2abbca;
+    margin-right: 10px;
+    width: 140px;
+}
+
+.btn-mark:hover {
+    background-color: #2abbca;
+    color: white;
 }

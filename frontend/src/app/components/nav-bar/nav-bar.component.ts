@@ -8,11 +8,12 @@ import { User } from '../../models/User';
 import { UserService } from '../../services/user.service';
 import { PendingComponent } from '../pending/pending.component';
 import { YourPostsComponent } from '../your-posts/your-posts.component';
+import { UpdateProfileComponent } from '../update-profile/update-profile.component';
 
 @Component({
   selector: 'app-nav-bar',
   standalone: true,
-  imports: [RouterLink, LoginComponent, RegisterComponent, AddPostComponent, PendingComponent, YourPostsComponent],
+  imports: [RouterLink, LoginComponent, RegisterComponent, AddPostComponent, PendingComponent, YourPostsComponent, UpdateProfileComponent],
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.scss'
 })

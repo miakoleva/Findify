@@ -16,4 +16,6 @@ interface UserService {
 
     fun deleteById(id: Long)
 
+    fun updateUserData(id: Long, firstName: String, lastName: String, phoneNumber: String, password: String)
+
 }
