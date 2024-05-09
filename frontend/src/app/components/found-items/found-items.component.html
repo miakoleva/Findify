@@ -44,7 +44,7 @@
             <div class="row" style="margin-left: 50px;">
                 <div class="col-md-4" *ngFor="let post of (filter ? filtered : posts)" style="width: 18rem;">
                     <div class="card mb-4">
-                        <img class="card-img-top" src="../../../assets/lost-item.jpg" alt="Lost item">
+                        <img class="card-img-top" [src]="post.image" alt="Lost item">
                         <div class="card-body">
                             <h5 class="card-title">{{ post.title }}</h5>
                             <p class="card-text">{{ post.description }}</p>

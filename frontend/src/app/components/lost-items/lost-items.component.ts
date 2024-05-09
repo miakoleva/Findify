@@ -14,6 +14,8 @@ import { Municipality } from '../../models/Municipality';
 import { MunicipalityService } from '../../services/municipality.service';
 import { CategoryService } from '../../services/category.service';
 import { FilterService } from '../../services/filter.service';
+import { DomSanitizer } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-lost-items',
@@ -28,7 +30,8 @@ export class LostItemsComponent {
     private municipalityService: MunicipalityService,
     private categoryService: CategoryService,
     private formBuilder: FormBuilder,
-    private filterService: FilterService
+    private filterService: FilterService,
+    private sanitizer: DomSanitizer
   ) { }
 
   posts: Post[] = [];
@@ -36,6 +39,7 @@ export class LostItemsComponent {
   
   form!: FormGroup;
   filter = false;
+  imageUrl!: string;
 
   ngOnInit(): void {
     this.getMunicipalities();
@@ -63,8 +67,19 @@ export class LostItemsComponent {
     formData.append("municipality", this.form.get('municipality')?.value || '');
     formData.append("state", "ACTIVE_LOST")
   
-    this.filterService.filterPosts(formData).subscribe((filteredPosts) => {
-      this.filtered = filteredPosts;
+    this.filterService.filterPosts(formData).subscribe({
+      next: (data) => {
+        this.filtered = data;
+        data.forEach((element) => {
+          this.postService.getPostImage(element.id).subscribe((ImageData)=> {
+            const imageUrl = URL.createObjectURL(new Blob([ImageData]));
+            element.image = this.sanitizer.bypassSecurityTrustUrl(imageUrl);
+          });
+        });
+      },
+      error: (error) => {
+        console.error('Error fetching filtered items', error);
+      }
     });
   }
   
@@ -83,9 +98,21 @@ export class LostItemsComponent {
       this.categories = it;
     })
   }
-  getLostItems(): void {
-    this.postService.getLostItems().subscribe((lostItems) => {
-      this.posts = lostItems;
+
+  getLostItems(){
+    this.postService.getLostItems().subscribe({
+      next: (data) => {
+        this.posts = data;
+        data.forEach((element) => {
+          this.postService.getPostImage(element.id).subscribe((imageData) => {
+            const imageUrl = URL.createObjectURL(new Blob([imageData]));
+            element.image = this.sanitizer.bypassSecurityTrustUrl(imageUrl);
+          });
+        });
+      },
+      error: (error) => {
+        console.error('Error fetching lost items:', error);
+      }
     });
   }
 

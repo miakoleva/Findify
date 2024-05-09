@@ -5,6 +5,8 @@ import com.sorsix.finalproject.backend.domain.PostStatus
 import com.sorsix.finalproject.backend.service.CategoryService
 import com.sorsix.finalproject.backend.service.MunicipalityService
 import com.sorsix.finalproject.backend.service.PostService
+import org.springframework.http.HttpHeaders
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
@@ -96,7 +98,7 @@ class PostController(
 
         val cat = categoryService.findCategoryByName(category)
         val mun = municipalityService.findMunicipalityByName(municipality)
-        val s: PostStatus = if(state == "ACTIVE_LOST")
+        val s: PostStatus = if (state == "ACTIVE_LOST")
             PostStatus.ACTIVE_LOST
         else
             PostStatus.ACTIVE_FOUND
@@ -105,6 +107,15 @@ class PostController(
 
         return ResponseEntity.ok().body(posts)
 
+    }
+
+    @GetMapping("/{postId}/image")
+    fun getPostImage(@PathVariable postId: Long): ResponseEntity<Any> {
+        val image: ByteArray = postService.getPostImage(postId)
+
+        return ResponseEntity.ok().contentType(MediaType.parseMediaType(MediaType.IMAGE_PNG_VALUE))
+            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\\\"${System.currentTimeMillis()}\\\"")
+            .body(image)
     }
 
 }
