@@ -47,4 +47,7 @@ interface PostRepository : JpaRepository<Post, Long> {
         state: PostStatus
     ): List<Post>
 
+    fun findAllByTitleContainingIgnoreCaseAndState(title: String, status: PostStatus): List<Post>
+    fun findAllByState(status: PostStatus): List<Post>
+
 }
