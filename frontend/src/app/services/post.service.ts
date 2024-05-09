@@ -42,4 +42,10 @@ export class PostService {
     return this.http.delete<Post>(`${this.url}/posts/${id}`)
   }
 
+  getPostImage(postId: number){
+    return this.http.get(`${this.url}/${postId}/image`, {
+      responseType: 'blob'
+    })
+  }
+
 }

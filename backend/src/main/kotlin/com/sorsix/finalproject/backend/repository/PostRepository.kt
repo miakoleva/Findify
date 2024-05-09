@@ -11,16 +11,43 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 
 @Repository
-interface PostRepository: JpaRepository<Post, Long> {
+interface PostRepository : JpaRepository<Post, Long> {
     fun findByState(status: PostStatus): List<Post>
+
     @Transactional
     @Modifying
     @Query("UPDATE Post p SET p.state = :state WHERE p.id = :id")
     fun updateStateById(id: Long, state: PostStatus): Int
     override fun deleteById(id: Long)
-    fun findAllByTitleContainingIgnoreCaseAndState(title: String, state: PostStatus): List<Post>
 
     fun findAllByCategoryAndState(category: Category, state: PostStatus): List<Post>
     fun findAllByMunicipalityAndState(municipality: Municipality, state: PostStatus): List<Post>
+    fun findAllByTitleContainingIgnoreCaseAndCategoryAndMunicipalityAndState(
+        title: String,
+        category: Category,
+        municipality: Municipality,
+        state: PostStatus
+    ): List<Post>
 
+    fun findAllByTitleContainingIgnoreCaseAndCategoryAndState(
+        title: String,
+        category: Category,
+        state: PostStatus
+    ): List<Post>
+
+    fun findAllByTitleContainingIgnoreCaseAndMunicipalityAndState(
+        title: String,
+        municipality: Municipality,
+        state: PostStatus
+    ): List<Post>
+
+    fun findAllByCategoryAndMunicipalityAndState(
+        category: Category,
+        municipality: Municipality,
+        state: PostStatus
+    ): List<Post>
+
+    fun findAllByState(state: PostStatus): List<Post>
+
+    fun findAllByTitleContainingIgnoreCaseAndState(title: String, state: PostStatus): List<Post>
 }

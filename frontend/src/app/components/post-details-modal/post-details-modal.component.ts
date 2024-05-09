@@ -10,6 +10,7 @@ import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommentService } from '../../services/comment.service';
 import { Comment } from '../../models/Comment';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-post-details-modal',
@@ -34,6 +35,7 @@ export class PostDetailsModalComponent implements OnInit {
     private location: Location,
     private formBuilder: FormBuilder,
     private commentService: CommentService,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit(): void {
@@ -43,6 +45,7 @@ export class PostDetailsModalComponent implements OnInit {
       this.commentService.getCommentsForPost(this.postId!!).subscribe((it) => {
         this.comments = it;
       })
+
   }
 
   loadPost() {
@@ -67,6 +70,10 @@ export class PostDetailsModalComponent implements OnInit {
         next: (post) => {
           this.post = post;
           this.loading = false;
+          this.postService.getPostImage(post?.id!).subscribe((imageData) => {
+            const imageUrl = URL.createObjectURL(new Blob([imageData]));
+            post!.image = this.sanitizer.bypassSecurityTrustUrl(imageUrl);
+          })
         },
         error: (error) => {
           console.log('on ERROR', error);
@@ -126,5 +133,9 @@ export class PostDetailsModalComponent implements OnInit {
         console.log("Error", error)
       }
     })
+  }
+
+  goBack(): void{
+    this.location.back();
   }
 }

@@ -12,6 +12,7 @@ import { MunicipalityService } from '../../services/municipality.service';
 import { Category } from '../../models/Category';
 import { Municipality } from '../../models/Municipality';
 import { NgFor, NgIf } from '@angular/common';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-found-items',
@@ -26,7 +27,8 @@ export class FoundItemsComponent{
     private municipalityService: MunicipalityService,
     private categoryService: CategoryService,
     private formBuilder: FormBuilder,
-    private filterService: FilterService
+    private filterService: FilterService,
+    private sanitizer: DomSanitizer
   ) { }
   posts: Post[] = []
   filtered: Post[] = [];
@@ -60,8 +62,19 @@ export class FoundItemsComponent{
     formData.append("state", "ACTIVE_FOUND")
 
   
-    this.filterService.filterPosts(formData).subscribe((filteredPosts) => {
-      this.filtered = filteredPosts;
+    this.filterService.filterPosts(formData).subscribe({
+      next: (data) => {
+        this.filtered = data;
+        data.forEach((element) => {
+          this.postService.getPostImage(element.id).subscribe((ImageData)=> {
+            const imageUrl = URL.createObjectURL(new Blob([ImageData]));
+            element.image = this.sanitizer.bypassSecurityTrustUrl(imageUrl);
+          });
+        });
+      },
+      error: (error) => {
+        console.error('Error fetching filtered items', error);
+      }
     });
   }
   
@@ -81,8 +94,19 @@ export class FoundItemsComponent{
     })
   }
   getFoundItems(): void {
-    this.postService.getFoundItems().subscribe((foundItems) => {
-      this.posts = foundItems;
+    this.postService.getFoundItems().subscribe({
+      next: (data) => {
+        this.posts = data;
+        data.forEach((element) => {
+          this.postService.getPostImage(element.id).subscribe((imageData) => {
+            const imageUrl = URL.createObjectURL(new Blob([imageData]));
+            element.image = this.sanitizer.bypassSecurityTrustUrl(imageUrl);
+          });
+        });
+      },
+      error: (error) => {
+        console.error('Error fetching lost items:', error);
+      }
     });
   }
 

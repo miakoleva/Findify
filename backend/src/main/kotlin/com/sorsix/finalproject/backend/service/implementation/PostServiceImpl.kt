@@ -33,43 +33,87 @@ class PostServiceImpl(private val postRepository: PostRepository, private val us
         val user = userService.findByEmail(email)
         val byteArr = image.bytes
 
-        return this.postRepository.save(Post(
-            id = 1L,
-            state = status,
-            title = title,
-            image = byteArr,
-            user = user!!,
-            municipality = municipality,
-            category = category,
-            description = description
-        ))
+        return this.postRepository.save(
+            Post(
+                id = 1L,
+                state = status,
+                title = title,
+                image = byteArr,
+                user = user!!,
+                municipality = municipality,
+                category = category,
+                description = description
+            )
+        )
 
     }
 
-    override fun filter(title: String, category: Category?, municipality: Municipality?, status: PostStatus): List<Post> {
+    override fun filter(
+        title: String,
+        category: Category?,
+        municipality: Municipality?,
+        status: PostStatus
+    ): List<Post> {
 
         val posts = mutableListOf<Post>()
 
-        if(title!=""){
-            if(this.postRepository.findAllByTitleContainingIgnoreCaseAndState(title, status).isNotEmpty()) {
+        if (title != "" && category != null && municipality != null) {
+            posts.addAll(
+                this.postRepository.findAllByTitleContainingIgnoreCaseAndCategoryAndMunicipalityAndState(
+                    title,
+                    category,
+                    municipality,
+                    status
+                )
+            );
+        } else if (title != "") {
+            if (category != null) {
+                posts.addAll(
+                    this.postRepository.findAllByTitleContainingIgnoreCaseAndCategoryAndState(
+                        title,
+                        category,
+                        status
+                    )
+                )
+            } else if (municipality != null) {
+                posts.addAll(
+                    this.postRepository.findAllByTitleContainingIgnoreCaseAndMunicipalityAndState(
+                        title,
+                        municipality,
+                        status
+                    )
+                )
+            } else {
                 posts.addAll(this.postRepository.findAllByTitleContainingIgnoreCaseAndState(title, status))
             }
-        }
-        if(category != null){
-            if(this.postRepository.findAllByCategoryAndState(category, status).isNotEmpty()) {
+
+        } else if (category != null) {
+            if (municipality != null) {
+                posts.addAll(
+                    this.postRepository.findAllByCategoryAndMunicipalityAndState(
+                        category,
+                        municipality,
+                        status
+                    )
+                )
+            } else {
                 posts.addAll(this.postRepository.findAllByCategoryAndState(category, status))
             }
-        }
-        if(municipality != null){
-            if(this.postRepository.findAllByMunicipalityAndState(municipality, status).isNotEmpty()) {
-                posts.addAll(this.postRepository.findAllByMunicipalityAndState(municipality, status))
-            }
-        }
-        if(posts.size > 1){
-            return posts.distinct()
+        } else if (municipality != null) {
+            posts.addAll(this.postRepository.findAllByMunicipalityAndState(municipality, status))
+        } else {
+            posts.addAll(this.postRepository.findAllByState(status))
         }
 
+        posts.distinct()
+
         return posts
+    }
+
+    override fun getPostImage(postId: Long): ByteArray {
+        val post: Post = postRepository.findById(postId).get()
+
+        return post.image
     }
 
 }

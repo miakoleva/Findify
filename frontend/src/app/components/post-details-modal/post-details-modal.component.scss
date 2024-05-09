@@ -27,3 +27,19 @@
 .comment-name {
     font-weight: bold;
 }
+.center-container {
+    display: flex;
+    justify-content: center;
+}
+
+.card-container {
+    position: relative;
+    display: inline-block;
+}
+
+.btnIcon {
+    position: absolute;
+    top: 0;
+    left: -40px; /* Adjust as needed */
+    margin-top: 98px;
+}
