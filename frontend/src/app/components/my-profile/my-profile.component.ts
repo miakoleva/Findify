@@ -21,6 +21,5 @@ export class MyProfileComponent implements OnInit {
    this.authService.getCurrentUser().subscribe((user) => {
      this.currentUser = user;
    })
-
  }
 }

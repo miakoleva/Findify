@@ -6,11 +6,11 @@
             <form [formGroup]="form" (ngSubmit)="onSubmitFilter()" class="card-body modal-content">
                 <div class="mb-3">
                     <label for="title">Title:</label>
-                    <input type="text" class="form-control" id="title" formControlName="title">
+                    <input type="text" class="form-control" id="title" formControlName="title" #input (input)="search(input.value)">
                 </div>
                 <div class="mb-3">
                     <label for="category">Category:</label>
-                    <select class="form-control" id="category" formControlName="category">
+                    <select class="form-control" id="category" formControlName="category" (change)="onSubmitFilter()">
                         <option selected>All</option>
                         @for(c of categories; track c.id){
                             <option>{{c.categoryName}}</option>
@@ -19,7 +19,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="municipality">Municipality:</label>
-                    <select class="form-control" id="municipality" formControlName="municipality">
+                    <select class="form-control" id="municipality" formControlName="municipality" (change)="onSubmitFilter()">
                         <option selected>All</option>
                         @for(m of municipalities; track m.id) {
                             <option>{{m.name}}</option>

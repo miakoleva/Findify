@@ -13,6 +13,7 @@ import { Category } from '../../models/Category';
 import { Municipality } from '../../models/Municipality';
 import { NgFor, NgIf } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
     selector: 'app-found-items',
@@ -36,6 +37,9 @@ export class FoundItemsComponent{
   form!: FormGroup;
   filter = false;
 
+  query$: Subject<string> = new Subject()
+  q: string = ''
+
   ngOnInit(): void {
     this.getMunicipalities();
     this.getCategories();
@@ -45,7 +49,21 @@ export class FoundItemsComponent{
       category: '',
       municipality: ''
     });
+
+    this.query$
+      .pipe(
+        debounceTime(400),
+        distinctUntilChanged(),
+      )
+      .subscribe(it => {
+        this.q = it;
+        this.onSubmitFilter()
+      })
+
     this.getFoundItems();
+  }
+  search(query: string) {
+    this.query$.next(query)
   }
 
   onSubmitFilter(): void {
@@ -56,7 +74,8 @@ export class FoundItemsComponent{
     }
   
     const formData = new FormData();
-    formData.append("title", this.form.get('title')?.value || '');
+    // formData.append("title", this.form.get('title')?.value || '');
+    formData.append("title", this.q);
     formData.append("category", this.form.get('category')?.value || '');
     formData.append("municipality", this.form.get('municipality')?.value || '');
     formData.append("state", "ACTIVE_FOUND")

@@ -4,6 +4,7 @@ import { User } from '../../models/User';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
+import { UserDTO } from '../../models/UserDTO';
 
 @Component({
   selector: 'app-update-profile',
@@ -30,9 +31,9 @@ export class UpdateProfileComponent implements OnInit {
     })
 
     this.form = this.formBuilder.group({
-      firstName: '',
-      lastName: '',
-      phoneNumber: '',
+      firstName: this.currentUser?.firstName,
+      lastName: this.currentUser?.lastName,
+      phoneNumber: this.currentUser?.phoneNumber,
       password: '',
     });
   }
@@ -46,25 +47,21 @@ export class UpdateProfileComponent implements OnInit {
       console.log("form is invalid")
       return;
     }
-    
-    console.log(this.form)
 
-    let formData = new FormData();
+    const userData: UserDTO = {
+      firstName: this.form.get('firstName')!!.value,
+      lastName: this.form.get('lastName')!!.value,
+      phoneNumber: this.form.get('phoneNumber')!!.value,
+      password: this.form.get('password')!!.value,
+      email: this.currentUser!!.email
+    }
 
-    formData.append("firstname", this.form.get('firstName')!!.value)
-    formData.append("lastName", this.form.get('lastName')!!.value)
-    formData.append("phoneNumber", this.form.get('phoneNumber')!!.value)
-    formData.append("password", this.form.get('password')!!.value)
-
-    this.userService.updateUser(this.currentUser!!.id, formData).subscribe({
+    this.userService.updateUser(this.currentUser!!.id, userData).subscribe({
       next: (data) => {
-        this.currentUser = data
-        console.log(data)
-        this.authService.setCurrentUser(this.currentUser!!)
-        localStorage.removeItem('user')
-        localStorage.setItem('user', JSON.stringify(this.currentUser))
-        this.router.navigateByUrl('/profile')
+        this.authService.setCurrentUser(data)
+        this.router.navigateByUrl(`profile/${this.currentUser?.id}`)
       }
     })
+    
   }
 }

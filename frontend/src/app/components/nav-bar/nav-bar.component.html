@@ -48,7 +48,7 @@
     </div>
     @if (loggedIn) {
     <div style="width: 150px">
-        <b><a class="nav-link" [routerLink]="['/profile']">{{currentUser?.firstName}} {{currentUser?.lastName}}</a></b>
+        <b><a class="nav-link" [routerLink]="['/profile', currentUser?.id]">{{currentUser?.firstName}} {{currentUser?.lastName}}</a></b>
     </div>
     <div class="d-flex">
 
