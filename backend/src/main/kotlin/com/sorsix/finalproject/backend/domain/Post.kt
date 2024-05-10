@@ -28,7 +28,12 @@ data class Post(
     @JoinColumn(name = "category_id")
     val category: Category = Category(),
     @Column(name = "description")
-    val description: String = ""
+    val description: String = "",
+    @ManyToOne
+    @JoinColumn(name = "location_id")
+    val location: Location = Location(),
+    @Column
+    val time: String = ""
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
