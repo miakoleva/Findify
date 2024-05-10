@@ -29,8 +29,9 @@ export class UserService {
   deleteUser(userId: number): Observable<any> {
     return this.http.delete<User>(`${this.url}/users/${userId}`)
   }
-  updateUser(userId: number, formData: FormData): Observable<User> {
-    return this.http.put<User>(`${this.url}/users/${userId}`, formData)
+  
+  updateUser(userId: number, userData: any): Observable<User> {
+    return this.http.put<User>(`${this.url}/users/${userId}`, userData)
   }
 
 }

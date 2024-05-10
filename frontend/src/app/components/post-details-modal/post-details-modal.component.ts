@@ -4,7 +4,7 @@ import { Post } from '../../models/Post';
 import { catchError, filter, map, mergeMap, of, tap } from 'rxjs';
 import { PostService } from '../../services/post.service';
 import { User } from '../../models/User';
-import { Location } from '@angular/common';
+import { Location, NgFor } from '@angular/common';
 import { MapComponent } from '../map/map.component';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -15,7 +15,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-post-details-modal',
   standalone: true,
-  imports: [RouterLink, MapComponent, ReactiveFormsModule],
+  imports: [RouterLink, MapComponent, ReactiveFormsModule, NgFor],
   templateUrl: './post-details-modal.component.html',
   styleUrl: './post-details-modal.component.scss'
 })

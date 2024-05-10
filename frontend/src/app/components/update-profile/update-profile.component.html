@@ -4,24 +4,24 @@
       <div class="card-body">
         <div class="row">
           <div class="col-md-12">
-            <h4>Your Profile</h4>
+            <h4>Edit Profile Details</h4>
             <hr>
           </div>
         </div>
         <div class="row">
           <div class="col-md-12">
-            <form [formGroup]="form">
+            <form [formGroup]="form" (ngSubmit)="update()">
               <div class="form-group row">
-                <label for="name" class="col-4 col-form-label">First Name</label>
+                <label for="firstName" class="col-4 col-form-label">First Name</label>
                 <div class="col-8">
-                  <input id="name" name="name" placeholder={{currentUser?.firstName}} class="form-control here"
+                  <input id="firstName" name="firstName" placeholder={{currentUser?.firstName}} class="form-control here"
                     type="text" formControlName="firstName">
                 </div>
               </div>
               <div class="form-group row">
-                <label for="lastname" class="col-4 col-form-label">Last Name</label>
+                <label for="lastName" class="col-4 col-form-label">Last Name</label>
                 <div class="col-8">
-                  <input id="lastname" name="lastname" placeholder={{currentUser?.lastName}} class="form-control here"
+                  <input id="lastName" name="lastName" placeholder={{currentUser?.lastName}} class="form-control here"
                     type="text" formControlName="lastName">
                 </div>
               </div>
@@ -48,7 +48,7 @@
               </div>
               <div class="form-group row">
                 <div class="offset-4 col-8">
-                  <button name="submit" type="submit" class="btn btn-primary" (click)="update()">Update My Profile</button>
+                  <button name="submit" type="submit" class="btn btn-primary">Update My Profile</button>
                 </div>
               </div>
             </form>

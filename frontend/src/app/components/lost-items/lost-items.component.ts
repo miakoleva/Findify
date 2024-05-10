@@ -15,6 +15,7 @@ import { MunicipalityService } from '../../services/municipality.service';
 import { CategoryService } from '../../services/category.service';
 import { FilterService } from '../../services/filter.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 
 
 @Component({
@@ -25,6 +26,7 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrl: './lost-items.component.scss'
 })
 export class LostItemsComponent {
+
   constructor(
     private postService: PostService,
     private municipalityService: MunicipalityService,
@@ -41,6 +43,9 @@ export class LostItemsComponent {
   filter = false;
   imageUrl!: string;
 
+  query$: Subject<string> = new Subject()
+  q: string = ''
+
   ngOnInit(): void {
     this.getMunicipalities();
     this.getCategories();
@@ -50,7 +55,22 @@ export class LostItemsComponent {
       category: '',
       municipality: ''
     });
+
+    this.query$
+      .pipe(
+        debounceTime(400),
+        distinctUntilChanged(),
+      )
+      .subscribe(it => {
+        this.q = it;
+        this.onSubmitFilter()
+      })
+
     this.getLostItems();
+  }
+
+  search(query: string) {
+    this.query$.next(query)
   }
 
 
@@ -62,7 +82,8 @@ export class LostItemsComponent {
     }
   
     const formData = new FormData();
-    formData.append("title", this.form.get('title')?.value || '');
+    // formData.append("title", this.form.get('title')?.value || '');
+    formData.append("title", this.q);
     formData.append("category", this.form.get('category')?.value || '');
     formData.append("municipality", this.form.get('municipality')?.value || '');
     formData.append("state", "ACTIVE_LOST")
