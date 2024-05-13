@@ -4,7 +4,7 @@ import { Post } from '../../models/Post';
 import { catchError, filter, map, mergeMap, of, tap } from 'rxjs';
 import { PostService } from '../../services/post.service';
 import { User } from '../../models/User';
-import { Location, NgFor } from '@angular/common';
+import { CommonModule, Location, NgFor } from '@angular/common';
 import { MapComponent } from '../map/map.component';
 import * as olProj from 'ol/proj';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -26,7 +26,7 @@ import { Coordinate } from 'ol/coordinate';
 @Component({
   selector: 'app-post-details-modal',
   standalone: true,
-  imports: [RouterLink, MapComponent, ReactiveFormsModule, NgFor],
+  imports: [RouterLink, MapComponent, ReactiveFormsModule, NgFor, CommonModule],
   templateUrl: './post-details-modal.component.html',
   styleUrl: './post-details-modal.component.scss'
 })
@@ -59,7 +59,6 @@ export class PostDetailsModalComponent implements OnInit {
       this.commentService.getCommentsForPost(this.postId!!).subscribe((it) => {
         this.comments = it;
       })
-
   }
 
   loadPost() {
@@ -142,9 +141,12 @@ export class PostDetailsModalComponent implements OnInit {
     //   geometry: new Point(olProj.fromLonLat([21.4254, 41.9981]))
     // });
   
-
+    const coordinates: Coordinate = [this.post?.location.lat!!, this.post?.location.lng!!]
+    
+    const lonLatCoordinate = olProj.transform(coordinates, 'EPSG:4326', 'EPSG:3857');
+    
     const markerFeature = new Feature({
-      geometry: new Point(olProj.fromLonLat([this.post?.location.lng!!, this.post?.location.lat!!]))
+      geometry: new Point(lonLatCoordinate)
     });
 
     markerFeature.setStyle(iconStyle);
