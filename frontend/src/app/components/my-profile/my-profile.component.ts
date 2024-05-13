@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../../models/User';
 import { AuthService } from '../../services/auth.service';
 import { RouterLink } from '@angular/router';
+import { UserService } from '../../services/user.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-my-profile',
@@ -12,14 +14,18 @@ import { RouterLink } from '@angular/router';
 })
 export class MyProfileComponent implements OnInit {
   currentUser: User | undefined
+  userImage: any;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private userService: UserService, private sanitizer: DomSanitizer) {
     this.currentUser = JSON.parse(localStorage.getItem('user')!!)
   }
 
+
  ngOnInit() {
-   this.authService.getCurrentUser().subscribe((user) => {
-     this.currentUser = user;
+     this.userService.getUserImage().subscribe((imageDate) => {
+      const imageUrl = URL.createObjectURL(new Blob([imageDate]));
+      this.userImage = this.sanitizer.bypassSecurityTrustUrl(imageUrl);
    })
+   
  }
 }

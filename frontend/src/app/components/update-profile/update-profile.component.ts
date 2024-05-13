@@ -5,11 +5,12 @@ import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule } from '@a
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { UserDTO } from '../../models/UserDTO';
+import { PhoneDirective } from '../../directives/phone.directive';
 
 @Component({
   selector: 'app-update-profile',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, PhoneDirective],
   templateUrl: './update-profile.component.html',
   styleUrl: './update-profile.component.scss'
 })
@@ -17,11 +18,14 @@ export class UpdateProfileComponent implements OnInit {
 
   currentUser: User | undefined
   form!: FormGroup
+  errorMessage: string = ''
 
   constructor(private authService: AuthService,
     private formBuilder: FormBuilder,
     private userService: UserService,
-    private router: Router) {
+    private router: Router,
+    private auth: AuthService,
+    private userSerivce: UserService) {
     this.currentUser = JSON.parse(localStorage.getItem('user')!!)
   }
 
@@ -31,37 +35,70 @@ export class UpdateProfileComponent implements OnInit {
     })
 
     this.form = this.formBuilder.group({
-      firstName: this.currentUser?.firstName,
-      lastName: this.currentUser?.lastName,
-      phoneNumber: this.currentUser?.phoneNumber,
-      password: '',
+      firstName: null,
+      lastName: null,
+      password: null,
+      phoneNumber: null,
+      image: null
     });
   }
+
+  onFileSelected(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.form.get('image')?.setValue(file);
+    }
+  }
+
+  onSubmit(): void{
+    if(this.form.invalid){
+      console.log("nevalidna")
+      console.log(this.form)
+      return;
+    }
+
+    let formData = new FormData();
+
+    if(this.form.controls['firstName'].value != null){
+    formData.append("firstName", this.form.get('firstName')!!.value)
+    }
+    if(this.form.controls['lastName'].value != null){
+    formData.append("lastName", this.form.get('lastName')!!.value)
+    }
+    if(this.form.controls['phoneNumber'].value != null){
+    formData.append("phoneNumber", this.form.get('phoneNumber')!!.value)
+    }
+    if(this.form.controls['password'].value != null){
+    formData.append("password", this.form.get('password')!!.value)
+    }
+    formData.append("image", this.form.get('image')!!.value)
+
+    this.userService.updateProfile(formData)
+    .subscribe({
+      next: (updatedUser: User) => {
+        this.currentUser = updatedUser;
+  
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+
+        this.authService.setCurrentUser(updatedUser);
+  
+        this.router.navigateByUrl('/app-my-profile');
+      },
+      error: error => {
+        this.errorMessage = error.error;
+        console.log("Error", error);
+      }
+    });
+  
+  }
+
   get f(): { [key: string]: AbstractControl } {
     return this.form.controls;
   }
 
-  update() {
-    if(this.form.invalid){
-      console.log(this.form)
-      console.log("form is invalid")
-      return;
-    }
+  // reloadPage() {
+  //   window.location.reload();
+  // }
 
-    const userData: UserDTO = {
-      firstName: this.form.get('firstName')!!.value,
-      lastName: this.form.get('lastName')!!.value,
-      phoneNumber: this.form.get('phoneNumber')!!.value,
-      password: this.form.get('password')!!.value,
-      email: this.currentUser!!.email
-    }
 
-    this.userService.updateUser(this.currentUser!!.id, userData).subscribe({
-      next: (data) => {
-        this.authService.setCurrentUser(data)
-        this.router.navigateByUrl(`profile/${this.currentUser?.id}`)
-      }
-    })
-    
-  }
 }

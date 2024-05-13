@@ -44,6 +44,7 @@ class SecurityConfig(private val customAuthenticationProvider: CustomAuthenticat
                     .requestMatchers(HttpMethod.GET, "/api/lost-items").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/found-items").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/categories").permitAll()
+//                    .requestMatchers(HttpMethod.GET, "/api/{userId}/image").permitAll()
 
                     .requestMatchers("/api/**").authenticated()
                     .anyRequest().permitAll()
