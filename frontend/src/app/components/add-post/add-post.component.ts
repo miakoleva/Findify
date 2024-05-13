@@ -9,11 +9,12 @@ import { UserService } from '../../services/user.service';
 import { HomeComponent } from '../home/home.component';
 import { Category } from '../../models/Category';
 import { CategoryService } from '../../services/category.service';
+import { MapComponent } from '../map/map.component';
 
 @Component({
   selector: 'app-add-post',
   standalone: true,
-  imports: [NgFor, ReactiveFormsModule, HomeComponent, RouterLink],
+  imports: [NgFor, ReactiveFormsModule, HomeComponent, RouterLink, MapComponent],
   templateUrl: './add-post.component.html',
   styleUrl: './add-post.component.scss'
 })
@@ -26,7 +27,8 @@ export class AddPostComponent implements OnInit {
     private formBuilder: FormBuilder,
     private service: PostService,
     private router: Router,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private postService: PostService
   ) { }
 
 
@@ -79,6 +81,9 @@ export class AddPostComponent implements OnInit {
     formData.append("municipality", this.form.get('municipality')!!.value)
     formData.append("image", this.form.get('image')!!.value)
     formData.append("state", state)
+    
+    formData.append("lng", this.postService.getCoordinates()[0].toString())
+    formData.append("lat", this.postService.getCoordinates()[1].toString())
 
     this.service.addPost(formData).subscribe({
       next: () => {

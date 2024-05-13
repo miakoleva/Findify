@@ -6,11 +6,22 @@ import { PostService } from '../../services/post.service';
 import { User } from '../../models/User';
 import { Location, NgFor } from '@angular/common';
 import { MapComponent } from '../map/map.component';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import * as olProj from 'ol/proj';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommentService } from '../../services/comment.service';
 import { Comment } from '../../models/Comment';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Feature, Map, View } from 'ol';
+import { OSM } from 'ol/source';
+import Attribution from 'ol/control/Attribution';
+import TileLayer from 'ol/layer/Tile';
+import Style from 'ol/style/Style';
+import Icon from 'ol/style/Icon';
+import { Point } from 'ol/geom';
+import VectorSource from 'ol/source/Vector';
+import VectorLayer from 'ol/layer/Vector';
+import { waitForAsync } from '@angular/core/testing';
+import { Coordinate } from 'ol/coordinate';
 
 @Component({
   selector: 'app-post-details-modal',
@@ -28,6 +39,7 @@ export class PostDetailsModalComponent implements OnInit {
   currentUser: User = JSON.parse(localStorage.getItem('user')!!)
   form!: FormGroup
   comments: Comment[] = []
+  map: Map | undefined
 
   constructor(private route: ActivatedRoute,
     private postService: PostService,
@@ -41,7 +53,9 @@ export class PostDetailsModalComponent implements OnInit {
   ngOnInit(): void {
       this.loadPost()
       this.buildForm()
-      console.log(this.post?.id)
+      this.initMap()
+      // this.addMarker()
+      console.log('id', this.postId)
       this.commentService.getCommentsForPost(this.postId!!).subscribe((it) => {
         this.comments = it;
       })
@@ -69,6 +83,7 @@ export class PostDetailsModalComponent implements OnInit {
       .subscribe({
         next: (post) => {
           this.post = post;
+          this.addMarker();
           this.post!!.flag = false;
           this.loading = false;
           this.postService.getPostImage(post?.id!).subscribe((imageData) => {
@@ -89,6 +104,61 @@ export class PostDetailsModalComponent implements OnInit {
     this.form = this.formBuilder.group({
       comment: ['', Validators.required]
     });
+  }
+
+  initMap() {
+    this.map = new Map({
+      target: 'item_map',
+      layers: [
+        new TileLayer({
+          source: new OSM()
+        })
+      ],
+      view: new View({
+        center: olProj.fromLonLat([21.4254, 41.9981]),
+        zoom: 10
+      })
+    });
+
+    const controls = this.map.getControls();
+
+    controls.forEach(control => {
+      if (control instanceof Attribution) {
+        this.map!!.removeControl(control);
+      }
+    })
+  }
+
+  addMarker(): void {
+    const iconStyle = new Style({
+      image: new Icon({
+        anchor: [0.5, 1],
+        src: '../../../assets/point.png',
+        scale: 0.05
+      })
+    });
+  
+    // const markerFeature = new Feature({
+    //   geometry: new Point(olProj.fromLonLat([21.4254, 41.9981]))
+    // });
+  
+
+    const markerFeature = new Feature({
+      geometry: new Point(olProj.fromLonLat([this.post?.location.lng!!, this.post?.location.lat!!]))
+    });
+
+    markerFeature.setStyle(iconStyle);
+  
+    const markerSource = new VectorSource({
+      features: [markerFeature]
+    });
+  
+    const markerLayer = new VectorLayer({
+      source: markerSource
+    });
+
+
+    this.map!.addLayer(markerLayer);
   }
 
   approve() {
