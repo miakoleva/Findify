@@ -8,7 +8,6 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
-import java.io.ByteArrayInputStream
 
 @Service
 class PostServiceImpl(private val postRepository: PostRepository, private val userService: UserService) : PostService {
@@ -27,7 +26,9 @@ class PostServiceImpl(private val postRepository: PostRepository, private val us
         description: String,
         municipality: Municipality,
         image: MultipartFile,
-        status: PostStatus
+        status: PostStatus,
+        location: Location,
+        time: String
     ): Post {
         val email = SecurityContextHolder.getContext().authentication.name
         val user = userService.findByEmail(email)
@@ -42,7 +43,9 @@ class PostServiceImpl(private val postRepository: PostRepository, private val us
                 user = user!!,
                 municipality = municipality,
                 category = category,
-                description = description
+                description = description,
+                location = location,
+                time = time
             )
         )
 

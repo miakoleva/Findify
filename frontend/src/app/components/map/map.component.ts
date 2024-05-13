@@ -11,6 +11,9 @@ import Attribution from 'ol/control/Attribution.js';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
 import VectorSource from 'ol/source/Vector';
+import { Coordinate } from 'ol/coordinate';
+import BaseLayer from 'ol/layer/Base';
+import { PostService } from '../../services/post.service';
 
 @Component({
   selector: 'app-map',
@@ -22,13 +25,14 @@ import VectorSource from 'ol/source/Vector';
 export class MapComponent implements OnInit {
 
   map: Map | undefined
+  layer: BaseLayer | undefined
+  postCoordinates: number[] = []
 
-
-  constructor() { }
+  constructor(private postService: PostService) { }
 
   ngOnInit(): void {
     this.initMap()
-    this.addMarker()
+    this.addMarkerOnClick()
   }
 
   initMap(): void {
@@ -54,7 +58,23 @@ export class MapComponent implements OnInit {
     })
   }
 
-  addMarker(): void {
+  addMarkerOnClick(): void {
+    this.map!.on('click', (event) => {
+      const coordinates: Coordinate = event.coordinate;
+      this.addMarker(coordinates);
+      this.postCoordinates = []
+      this.postCoordinates.push(coordinates.at(0)!!);
+      this.postCoordinates.push(coordinates.at(1)!!);
+      this.postService.addCoordinates(this.postCoordinates)
+    });
+  }
+
+  clearMarkerLayer(): void {
+    this.map?.removeLayer(this.layer!!)
+  }
+
+  addMarker(coordinates: Coordinate): void {
+    this.clearMarkerLayer()
     const iconStyle = new Style({
       image: new Icon({
         anchor: [0.5, 1],
@@ -63,10 +83,14 @@ export class MapComponent implements OnInit {
       })
     });
   
-    const markerFeature = new Feature({
-      geometry: new Point(olProj.fromLonLat([21.4254, 41.9981]))
-    });
+    // const markerFeature = new Feature({
+    //   geometry: new Point(olProj.fromLonLat([21.4254, 41.9981]))
+    // });
   
+    const markerFeature = new Feature({
+      geometry: new Point(coordinates)
+    });
+
     markerFeature.setStyle(iconStyle);
   
     const markerSource = new VectorSource({
@@ -76,7 +100,9 @@ export class MapComponent implements OnInit {
     const markerLayer = new VectorLayer({
       source: markerSource
     });
-  
+
+    this.layer = markerLayer
+
     this.map!.addLayer(markerLayer);
   }
 

@@ -1,8 +1,10 @@
 package com.sorsix.finalproject.backend.api
 
+import com.sorsix.finalproject.backend.domain.Location
 import com.sorsix.finalproject.backend.domain.Post
 import com.sorsix.finalproject.backend.domain.PostStatus
 import com.sorsix.finalproject.backend.service.CategoryService
+import com.sorsix.finalproject.backend.service.LocationService
 import com.sorsix.finalproject.backend.service.MunicipalityService
 import com.sorsix.finalproject.backend.service.PostService
 import org.springframework.http.HttpHeaders
@@ -10,6 +12,7 @@ import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
+import java.time.LocalDateTime
 
 
 @RestController
@@ -18,7 +21,8 @@ import org.springframework.web.multipart.MultipartFile
 class PostController(
     private val postService: PostService,
     private val categoryService: CategoryService,
-    private val municipalityService: MunicipalityService
+    private val municipalityService: MunicipalityService,
+    private val locationService: LocationService
 ) {
 
     @GetMapping("/lost-items")
@@ -75,16 +79,26 @@ class PostController(
         @RequestParam description: String,
         @RequestParam municipality: String,
         @RequestParam image: MultipartFile,
-        @RequestParam state: String
+        @RequestParam state: String,
+        @RequestParam(required = false) lng: Double,
+        @RequestParam(required = false) lat: Double
     ): ResponseEntity<Post> {
-
         val cat = categoryService.findCategoryByName(category)
         val mun = municipalityService.findMunicipalityByName(municipality)
         val s: PostStatus = PostStatus.valueOf(state)
+        locationService.save(Location(1L, lng, lat))
+        val loc = locationService.findLatest()!!
 
-
-        val post = postService.create(title, cat!!, description, mun!!, image, s)
-
+        val post = postService.create(
+            title = title,
+            category = cat!!,
+            description = description,
+            municipality = mun!!,
+            image = image,
+            status = s,
+            location = loc,
+            time = LocalDateTime.now().toString()
+        )
         return ResponseEntity.ok().body(post)
     }
 

@@ -9,8 +9,18 @@ import { Observable } from 'rxjs';
 export class PostService {
 
   url = 'http://localhost:8080/api'
+  postCoordinates: number[] = []
+
 
   constructor(private http: HttpClient) {}
+
+  addCoordinates(coordinates: number[]) {
+    this.postCoordinates = coordinates
+  }
+
+  getCoordinates(): number[] {
+    return this.postCoordinates
+  }
 
   addPost(formData: FormData): Observable<Post> {
     console.log("Posted.")
