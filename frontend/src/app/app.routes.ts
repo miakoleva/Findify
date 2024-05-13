@@ -27,5 +27,6 @@ export const routes: Routes = [
     { path: 'user-management', component: UserManagementComponent},
     { path: 'profile/:id', component: MyProfileComponent},
     { path: 'update-profile/:id', component: UpdateProfileComponent},
+    {path: 'app-my-profile', component: MyProfileComponent},
     { path: '**', redirectTo: 'home' }
 ];

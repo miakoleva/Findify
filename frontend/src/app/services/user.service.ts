@@ -30,8 +30,19 @@ export class UserService {
     return this.http.delete<User>(`${this.url}/users/${userId}`)
   }
   
-  updateUser(userId: number, userData: any): Observable<User> {
-    return this.http.put<User>(`${this.url}/users/${userId}`, userData)
+  // updateUser(userId: number, userData: any): Observable<User> {
+  //   return this.http.put<User>(`${this.url}/users/${userId}`, userData)
+  // }
+
+  updateProfile(formData: FormData): Observable<User>{
+    return this.http.post<User>(`${this.url}/edit-profile`, formData)
+  }
+
+  getUserImage(){
+    console.log("eve slika")
+    return this.http.get(`${this.url}/mia/image`, {
+      responseType: 'blob'
+    })
   }
 
 }
