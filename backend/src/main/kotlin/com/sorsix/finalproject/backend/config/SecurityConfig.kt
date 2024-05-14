@@ -76,8 +76,8 @@ class SecurityConfig(private val customAuthenticationProvider: CustomAuthenticat
 // "/api/uploads"
                     )
                     .permitAll()
-                    .requestMatchers("/api/new-post")
-                    .authenticated()
+//                    .requestMatchers("/api/new-post")
+//                    .authenticated()
             }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authenticationProvider(customAuthenticationProvider)
