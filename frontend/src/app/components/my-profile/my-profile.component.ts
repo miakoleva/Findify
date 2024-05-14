@@ -22,7 +22,7 @@ export class MyProfileComponent implements OnInit {
 
 
  ngOnInit() {
-     this.userService.getUserImage().subscribe((imageDate) => {
+     this.userService.getUserImage(this.currentUser?.id!!).subscribe((imageDate) => {
       const imageUrl = URL.createObjectURL(new Blob([imageDate]));
       this.userImage = this.sanitizer.bypassSecurityTrustUrl(imageUrl);
    })

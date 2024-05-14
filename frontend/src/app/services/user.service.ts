@@ -38,9 +38,9 @@ export class UserService {
     return this.http.post<User>(`${this.url}/edit-profile`, formData)
   }
 
-  getUserImage(){
+  getUserImage(id: number){
     console.log("eve slika")
-    return this.http.get(`${this.url}/mia/image`, {
+    return this.http.get(`${this.url}/mia/image/${id}`, {
       responseType: 'blob'
     })
   }

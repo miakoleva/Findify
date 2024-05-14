@@ -54,10 +54,10 @@ class UserController(private val userService: UserService, private val hashServi
         return  ResponseEntity.ok().body(response)
     }
 
-    @GetMapping("/mia/image")
-    fun getUserImage(): ResponseEntity<Any> {
-        val image: ByteArray = userService.getUserImage()
-
+    @GetMapping("/mia/image/{id}")
+    fun getUserImage(@PathVariable id: Long): ResponseEntity<Any> {
+//        val image: ByteArray = userService.getUserImage()
+        val image: ByteArray = userService.findById(id)!!.image
         return ResponseEntity.ok().contentType(MediaType.parseMediaType(MediaType.IMAGE_PNG_VALUE))
             .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\\\"${System.currentTimeMillis()}\\\"")
             .body(image)
