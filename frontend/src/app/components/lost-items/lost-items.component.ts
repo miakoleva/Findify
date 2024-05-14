@@ -17,7 +17,6 @@ import { FilterService } from '../../services/filter.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 
-
 @Component({
   selector: 'app-lost-items',
   standalone: true,
@@ -58,7 +57,7 @@ export class LostItemsComponent {
 
     this.query$
       .pipe(
-        debounceTime(400),
+        debounceTime(800),
         distinctUntilChanged(),
       )
       .subscribe(it => {
@@ -82,7 +81,6 @@ export class LostItemsComponent {
     }
   
     const formData = new FormData();
-    // formData.append("title", this.form.get('title')?.value || '');
     formData.append("title", this.q);
     formData.append("category", this.form.get('category')?.value || '');
     formData.append("municipality", this.form.get('municipality')?.value || '');
@@ -125,6 +123,7 @@ export class LostItemsComponent {
       next: (data) => {
         this.posts = data;
         data.forEach((element) => {
+          console.log("fetching images while not logged in")
           this.postService.getPostImage(element.id).subscribe((imageData) => {
             const imageUrl = URL.createObjectURL(new Blob([imageData]));
             element.image = this.sanitizer.bypassSecurityTrustUrl(imageUrl);
@@ -141,4 +140,5 @@ export class LostItemsComponent {
     window.location.reload();
   }
 
+ 
 }

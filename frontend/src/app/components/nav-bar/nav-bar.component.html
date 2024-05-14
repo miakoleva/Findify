@@ -12,34 +12,30 @@
                         <b><a class="nav-link" [routerLink]="['/home']">{{currentUser?.firstName}} {{currentUser?.lastName}}</a></b>
                     </li>
                 } -->
-                <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['/home']">Home</a>
-                </li>
                 @if(!loggedIn) {
                 <li class="nav-item">
                     <a class="nav-link" [routerLink]="['/login']" data-bs-toggle="modal"
-                        data-bs-target="#loginModal">Log In</a>
+                        data-bs-target="#loginModal">Најавете се</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" [routerLink]="['/signup']" data-bs-toggle="modal"
-                        data-bs-target="#signupModal">Sign
-                        Up</a>
+                        data-bs-target="#signupModal">Регистрирајте се</a>
                 </li>
                 }
                 @if(loggedIn) {
                 <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['/your-posts']">Your Posts</a>
+                    <a class="nav-link" [routerLink]="['/your-posts']">Твои објави</a>
                 </li>
                 @if(currentUser?.role === "ROLE_ADMIN") {
                 <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['/pending-posts']">Pending</a>
+                    <a class="nav-link" [routerLink]="['/pending-posts']">На чекање</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['/user-management']">User Management</a>
+                    <a class="nav-link" [routerLink]="['/user-management']">Корисници</a>
                 </li>
                 }
                 <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['/home']" (click)="logOut()">Log Out</a>
+                    <a class="nav-link" [routerLink]="['/home']" (click)="logOut()">Одјави се</a>
                 </li>
                 }
 
@@ -52,7 +48,7 @@
     </div>
     <div class="d-flex">
 
-        <button type="button" [routerLink]="['/add-post']" class="btn btn-outline-primary">Make a post</button>
+        <button type="button" [routerLink]="['/add-post']" class="btn btn-outline-primary">Објави</button>
     </div>
     }
 </header>

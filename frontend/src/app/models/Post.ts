@@ -14,5 +14,6 @@ export interface Post{
     category: Category;
     comments: Comment[];
     flag: boolean;
-    location: Location
+    location: Location;
+    time: String;
 }

@@ -5,14 +5,14 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Sign Up</h5>
+                <h5 class="modal-title">Регистрирајте се</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" [routerLink]="['/home']"></button>
             </div>
             <div class="modal-body">
                 <form [formGroup]="form" (ngSubmit)="onSubmit()">
                     <div class="form-row mb-3">
                         <div class="form-group mb-3">
-                            <label>First Name</label>
+                            <label>Име</label>
                             <input type="text" formControlName="firstName" class="form-control" placeholder="First Name"
                                 [ngClass]="{ 'is-invalid': submitted && f['firstName'].errors }" />
                             <div *ngIf="submitted && f['firstName'].errors" class="invalid-feedback">
@@ -20,7 +20,7 @@
                             </div>
                         </div>
                         <div class="form-group mb-3">
-                            <label>Last Name</label>
+                            <label>Презиме</label>
                         <input type="text" formControlName="lastName" class="form-control" placeholder="Last Name"
                             [ngClass]="{ 'is-invalid': submitted && f['lastName'].errors }" />
                         <div *ngIf="submitted && f['lastName'].errors" class="invalid-feedback">
@@ -30,7 +30,7 @@
                         </div>
                     </div>
                     <div class="form-group mb-3">
-                        <label>Email</label>
+                        <label>Емаил</label>
                     <input type="text" formControlName="email" class="form-control" placeholder="Email"
                         [ngClass]="{ 'is-invalid': submitted && f['email'].errors }" />
                     <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
@@ -39,7 +39,7 @@
                     </div>
                     </div>
                     <div class="form-group mb-3">
-                        <label>Password</label>
+                        <label>Пасворд</label>
                         <input type="password" formControlName="password" class="form-control" placeholder="Password"
                             [ngClass]="{ 'is-invalid': submitted && f['password'].errors }" />
                         <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
@@ -53,7 +53,7 @@
                         </div>    
                     </div>
                     <div class="form-group mb-3">
-                        <label>Phone number</label>
+                        <label>Телефонски број</label>
                         <input type="text" formControlName="phoneNumber" class="form-control"  placeholder="Phone Number" appPhone
                             [ngClass]="{ 'is-invalid': submitted && f['phoneNumber'].errors }" />
                         <div *ngIf="submitted && f['phoneNumber'].errors" class="invalid-feedback">
@@ -67,7 +67,7 @@
                         </div>
                     </div>
     
-                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                    <button type="submit" class="btn btn-primary">Регистрирајте се</button>
                 </form>
             </div>
         </div>
