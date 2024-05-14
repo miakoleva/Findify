@@ -3,11 +3,6 @@
     border-color: #2abbca;
 }
 
-.container {
-    margin-top: 10px;
-}
-
-
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -22,20 +17,20 @@
     border: 1px solid black;
 }
 
-.modal-container {
-    width: 30%; 
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
-}
+// .modal-container {
+//     width: 30%; 
+//     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
+// }
 
-.modal-content {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-}
+// .modal-content {
+//     background-color: #fff;
+//     padding: 20px;
+//     border-radius: 5px;
+// }
 
-.modal-body {
-    text-align: center;
-}
+// .modal-body {
+//     text-align: center;
+// }
 
 @keyframes fadeIn {
     from {
@@ -47,6 +42,65 @@
 }
 
 .fade-in {
-    animation: fadeIn 0.5s ease-out; 
+    animation: fadeIn 0.80s ease-out; 
 }
 
+
+
+.filter-container {
+    background-color: white; 
+    height: 100vh; 
+    padding: 70px; /* Add padding to create space */
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 250px;
+}
+
+.container-fluid {
+    display: flex;
+    flex-direction: row;
+}
+
+.col-md-10 {
+    margin-left: 250px; 
+}
+
+.input-field {
+    padding-top: 20px; /* Adjust as needed */
+}
+
+.custom-input {
+    width: 180px; /* Set a specific width */
+    
+}
+body {
+    background-image: none !important;
+}
+
+.no-gutters{
+    width: 1000px;
+}
+
+.card-body{
+    width: 600px;
+}
+.custom-card {
+    margin-bottom: 10px; /* Adjust the margin value as needed */
+}
+
+.post-container{
+    margin-top: 20px;
+}
+.col-md-4 {
+    padding: 0;
+}
+.card-img {
+    padding: 0;
+}
+.row {
+    margin-left: 0;
+}

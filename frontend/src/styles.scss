@@ -22,9 +22,11 @@ body {
 
 body {
     background-image: url('../src/assets/home-page.png');
-    background-size: cover;
-    background-position: center;
+    background-size: 70%;
+    background-position: calc(50% + 30px) center;
+    background-repeat: no-repeat;
 }
+
 
 #cardModal {
     position: fixed;
