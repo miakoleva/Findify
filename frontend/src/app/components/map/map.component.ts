@@ -61,10 +61,12 @@ export class MapComponent implements OnInit {
   addMarkerOnClick(): void {
     this.map!.on('click', (event) => {
       const coordinates: Coordinate = event.coordinate;
+      const lonLatCoordinate = olProj.transform(coordinates, 'EPSG:3857', 'EPSG:4326');
+      console.log('Clicked coordinate (EPSG:4326):', lonLatCoordinate);
       this.addMarker(coordinates);
       this.postCoordinates = []
-      this.postCoordinates.push(coordinates.at(0)!!);
-      this.postCoordinates.push(coordinates.at(1)!!);
+      this.postCoordinates.push(lonLatCoordinate.at(0)!!);
+      this.postCoordinates.push(lonLatCoordinate.at(1)!!);
       this.postService.addCoordinates(this.postCoordinates)
     });
   }
