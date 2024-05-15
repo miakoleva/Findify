@@ -1,6 +1,7 @@
 .btn {
     background-color: #2abbca;
     border-color: #2abbca;
+    color: white;
 }
 
 .modal-overlay {
@@ -103,4 +104,21 @@ body {
 }
 .row {
     margin-left: 0;
+}
+
+.modal-container{
+    padding: 30px;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.btn .btn-secondary{
+    align-self: center;
+}
+
+.category-box {
+    border: 1px solid #ced4da; /* Add border */
+    border-radius: 0.25rem; /* Add border radius for rounded corners */
+    padding: 0.4rem; /* Add padding inside the box */
+    margin-bottom: 5px;
 }

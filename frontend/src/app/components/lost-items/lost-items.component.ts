@@ -15,7 +15,7 @@ import { MunicipalityService } from '../../services/municipality.service';
 import { CategoryService } from '../../services/category.service';
 import { FilterService } from '../../services/filter.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
+import { Subject, catchError, debounceTime, distinctUntilChanged, forkJoin, mergeMap, of } from 'rxjs';
 
 @Component({
   selector: 'app-lost-items',
@@ -52,7 +52,8 @@ export class LostItemsComponent {
     this.form = this.formBuilder.group({
       title: '',
       category: '',
-      municipality: ''
+      municipality: '',
+      order: ''
     });
 
     this.query$
@@ -84,7 +85,8 @@ export class LostItemsComponent {
     formData.append("title", this.q);
     formData.append("category", this.form.get('category')?.value || '');
     formData.append("municipality", this.form.get('municipality')?.value || '');
-    formData.append("state", "ACTIVE_LOST")
+    formData.append("state", "ACTIVE_LOST");
+    formData.append("order", "Најновите прво");
   
     this.filterService.filterPosts(formData).subscribe({
       next: (data) => {
@@ -118,17 +120,28 @@ export class LostItemsComponent {
     })
   }
 
-  getLostItems(){
-    this.postService.getLostItems().subscribe({
-      next: (data) => {
-        this.posts = data;
-        data.forEach((element) => {
-          console.log("fetching images while not logged in")
-          this.postService.getPostImage(element.id).subscribe((imageData) => {
-            const imageUrl = URL.createObjectURL(new Blob([imageData]));
-            element.image = this.sanitizer.bypassSecurityTrustUrl(imageUrl);
-          });
+  getLostItems() {
+    this.postService.getLostItems().pipe(
+      mergeMap(data => {
+        const requests = data.map(element => {
+          console.log("fetching images while not logged in");
+          return this.postService.getPostImage(element.id).pipe(
+            mergeMap(imageData => {
+              const imageUrl = URL.createObjectURL(new Blob([imageData]));
+              element.image = this.sanitizer.bypassSecurityTrustUrl(imageUrl);
+              return of(element);
+            }),
+            catchError(error => {
+              console.error('Error fetching image for post:', element.id, error);
+              return of(element); // Return the original element in case of error
+            })
+          );
         });
+        return forkJoin(requests);
+      })
+    ).subscribe({
+      next: (data) => {
+        this.posts = data; // Assign data to this.posts once all images are fetched
       },
       error: (error) => {
         console.error('Error fetching lost items:', error);

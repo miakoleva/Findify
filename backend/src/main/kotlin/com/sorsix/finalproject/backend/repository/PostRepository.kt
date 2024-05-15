@@ -21,12 +21,12 @@ interface PostRepository : JpaRepository<Post, Long> {
     //override fun deleteById(id: Long)
     fun findAllByCategoryAndState(category: Category, state: PostStatus): List<Post>
     fun findAllByMunicipalityAndState(municipality: Municipality, state: PostStatus): List<Post>
-    fun findAllByTitleContainingIgnoreCaseAndCategoryAndMunicipalityAndState(
-        title: String,
-        category: Category,
-        municipality: Municipality,
-        state: PostStatus
-    ): List<Post>
+//    fun findAllByTitleContainingIgnoreCaseAndCategoryAndMunicipalityAndState(
+//        title: String,
+//        category: Category,
+//        municipality: Municipality,
+//        state: PostStatus
+//    ): List<Post>
 
     fun findAllByTitleContainingIgnoreCaseAndCategoryAndState(
         title: String,
@@ -48,5 +48,7 @@ interface PostRepository : JpaRepository<Post, Long> {
 
     fun findAllByTitleContainingIgnoreCaseAndState(title: String, status: PostStatus): List<Post>
     fun findAllByState(status: PostStatus): List<Post>
+
+    fun findAllByTitleContainingIgnoreCaseAndCategoryAndMunicipalityAndState(title: String, category: Category, municipality: Municipality, state: PostStatus): List<Post>
 
 }

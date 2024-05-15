@@ -21,7 +21,8 @@ export class FilterService {
         title: formData.get('title') as string,
         category: formData.get('category') as string,
         municipality: formData.get('municipality') as string,
-        state: formData.get('state') as string
+        state: formData.get('state') as string,
+        order: formData.get('order') as string
       }
     };
     return this.http.post<Post[]>(`${this.url}/filter`, null, options);

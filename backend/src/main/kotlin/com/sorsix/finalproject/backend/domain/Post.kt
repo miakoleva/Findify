@@ -2,6 +2,7 @@ package com.sorsix.finalproject.backend.domain
 
 import jakarta.persistence.*
 import org.hibernate.annotations.Type
+import java.time.LocalDateTime
 import kotlin.reflect.typeOf
 
 @Entity
@@ -33,7 +34,9 @@ data class Post(
     @JoinColumn(name = "location_id")
     val location: Location = Location(),
     @Column
-    val time: String = ""
+    val time: String = "",
+    @Transient
+    var date: LocalDateTime = LocalDateTime.now()
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -49,5 +52,10 @@ data class Post(
     override fun hashCode(): Int {
         return image.contentHashCode()
     }
+
+    fun convert(){
+        date = LocalDateTime.parse(time)
+    }
+
 }
 

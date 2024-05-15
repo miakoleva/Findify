@@ -8,6 +8,7 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
+import java.util.stream.Collectors
 
 @Service
 class PostServiceImpl(private val postRepository: PostRepository, private val userService: UserService) : PostService {
@@ -51,66 +52,78 @@ class PostServiceImpl(private val postRepository: PostRepository, private val us
 
     }
 
-    override fun filter(
+    fun buildQuery(
         title: String,
         category: Category?,
         municipality: Municipality?,
         status: PostStatus
     ): List<Post> {
-
-        val posts = mutableListOf<Post>()
-
-        if (title != "" && category != null && municipality != null) {
-            posts.addAll(
-                this.postRepository.findAllByTitleContainingIgnoreCaseAndCategoryAndMunicipalityAndState(
+        return when {
+            title.isNotEmpty() && category != null && municipality != null ->
+                postRepository.findAllByTitleContainingIgnoreCaseAndCategoryAndMunicipalityAndState(
                     title,
                     category,
                     municipality,
                     status
                 )
-            );
-        } else if (title != "") {
-            if (category != null) {
-                posts.addAll(
-                    this.postRepository.findAllByTitleContainingIgnoreCaseAndCategoryAndState(
-                        title,
-                        category,
-                        status
-                    )
-                )
-            } else if (municipality != null) {
-                posts.addAll(
-                    this.postRepository.findAllByTitleContainingIgnoreCaseAndMunicipalityAndState(
-                        title,
-                        municipality,
-                        status
-                    )
-                )
-            } else {
-                posts.addAll(this.postRepository.findAllByTitleContainingIgnoreCaseAndState(title, status))
-            }
 
-        } else if (category != null) {
-            if (municipality != null) {
-                posts.addAll(
-                    this.postRepository.findAllByCategoryAndMunicipalityAndState(
-                        category,
-                        municipality,
-                        status
-                    )
+            title.isNotEmpty() && category != null ->
+                postRepository.findAllByTitleContainingIgnoreCaseAndCategoryAndState(
+                    title,
+                    category,
+                    status
                 )
-            } else {
-                posts.addAll(this.postRepository.findAllByCategoryAndState(category, status))
-            }
-        } else if (municipality != null) {
-            posts.addAll(this.postRepository.findAllByMunicipalityAndState(municipality, status))
-        } else {
-            posts.addAll(this.postRepository.findAllByState(status))
+
+            title.isNotEmpty() && municipality != null ->
+                postRepository.findAllByTitleContainingIgnoreCaseAndMunicipalityAndState(
+                    title,
+                    municipality,
+                    status
+                )
+
+            title.isNotEmpty() ->
+                postRepository.findAllByTitleContainingIgnoreCaseAndState(title, status)
+
+            category != null && municipality != null ->
+                postRepository.findAllByCategoryAndMunicipalityAndState(category, municipality, status)
+
+            category != null ->
+                postRepository.findAllByCategoryAndState(category, status)
+
+            municipality != null ->
+                postRepository.findAllByMunicipalityAndState(municipality, status)
+
+            else ->
+                postRepository.findAllByState(status)
+        }
+    }
+
+
+    override fun filter(
+        title: String,
+        category: Category?,
+        municipality: Municipality?,
+        status: PostStatus,
+        order: String
+    ): List<Post> {
+        val posts = mutableListOf<Post>()
+
+        if (category == null && municipality == null && title.isEmpty()) {
+            return postRepository.findAllByState(status)
+                .sortedByDescending { it.date }
         }
 
-        posts.distinct()
+        posts.addAll(buildQuery(title, category, municipality, status))
 
-        return posts
+        val uniquePosts = posts.distinct()
+
+        val sortedPosts = uniquePosts.sortedByDescending { it.date }
+
+        return if (order == "Најнови прво") {
+            sortedPosts.reversed()
+        } else {
+            sortedPosts
+        }
     }
 
     override fun getPostImage(postId: Long): ByteArray {

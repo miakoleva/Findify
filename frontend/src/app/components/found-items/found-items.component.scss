@@ -1,6 +1,7 @@
 .btn {
     background-color: #2abbca;
     border-color: #2abbca;
+    color: white;
 }
 
 .modal-overlay {
@@ -16,21 +17,6 @@
     z-index: 999;
     border: 1px solid black;
 }
-
-// .modal-container {
-//     width: 30%; 
-//     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
-// }
-
-// .modal-content {
-//     background-color: #fff;
-//     padding: 20px;
-//     border-radius: 5px;
-// }
-
-// .modal-body {
-//     text-align: center;
-// }
 
 @keyframes fadeIn {
     from {
